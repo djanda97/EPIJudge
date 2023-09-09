@@ -21,7 +21,7 @@ public class ReverseBits {
       System.out.println("Input: " + Long.toBinaryString(x));
       System.out.println("Output: " + String.valueOf(binary));
     }
-    return Long.parseLong(String.valueOf(binary));
+    return Long.parseLong(String.valueOf(binary), 2);
   }
 
   public static void main(String[] args) {
