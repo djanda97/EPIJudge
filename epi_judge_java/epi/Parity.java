@@ -13,12 +13,11 @@ public class Parity {
       }
     }
 
-    short result = 0;
     if (count % 2 != 0) {
-      result = 1;
+      return 1;
     }
 
-    return result;
+    return 0;
   }
 
   public static void main(String[] args) {
