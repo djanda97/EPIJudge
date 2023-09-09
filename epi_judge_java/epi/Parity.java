@@ -8,20 +8,16 @@ public class Parity {
   public static short parity(long x) {
     short count = 0;
     for (char c : Long.toBinaryString(x).toCharArray()) {
-      if (c == '1') {
-        count++;
-      }
+      if (c == '1') count++;
     }
-
-    if (count % 2 != 0) {
-      return 1;
-    }
-
+    if (count % 2 != 0) return 1;
     return 0;
   }
 
   public static void main(String[] args) {
-    System.exit(GenericTest.runFromAnnotations(args, "Parity.java", new Object() {
-    }.getClass().getEnclosingClass()).ordinal());
+    System.exit(
+        GenericTest.runFromAnnotations(
+                args, "Parity.java", new Object() {}.getClass().getEnclosingClass())
+            .ordinal());
   }
 }
