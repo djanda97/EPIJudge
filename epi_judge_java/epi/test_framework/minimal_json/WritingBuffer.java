@@ -1,16 +1,12 @@
-
 package epi.test_framework.minimal_json;
 
 import java.io.IOException;
 import java.io.Writer;
 
 /**
- * A lightweight writing buffer to reduce the amount of write operations to be
- * performed on the
- * underlying writer. This implementation is not thread-safe. It deliberately
- * deviates from the
- * contract of Writer. In particular, it does not flush or close the wrapped
- * writer nor does it
+ * A lightweight writing buffer to reduce the amount of write operations to be performed on the
+ * underlying writer. This implementation is not thread-safe. It deliberately deviates from the
+ * contract of Writer. In particular, it does not flush or close the wrapped writer nor does it
  * ensure that the wrapped writer is open.
  */
 class WritingBuffer extends Writer {
@@ -18,7 +14,9 @@ class WritingBuffer extends Writer {
   private final char[] buffer;
   private int fill = 0;
 
-  WritingBuffer(Writer writer) { this(writer, 16); }
+  WritingBuffer(Writer writer) {
+    this(writer, 16);
+  }
 
   WritingBuffer(Writer writer, int bufferSize) {
     this.writer = writer;
@@ -30,7 +28,7 @@ class WritingBuffer extends Writer {
     if (fill > buffer.length - 1) {
       flush();
     }
-    buffer[fill++] = (char)c;
+    buffer[fill++] = (char) c;
   }
 
   @Override
@@ -59,18 +57,14 @@ class WritingBuffer extends Writer {
     fill += len;
   }
 
-  /**
-   * Flushes the internal buffer but does not flush the wrapped writer.
-   */
+  /** Flushes the internal buffer but does not flush the wrapped writer. */
   @Override
   public void flush() throws IOException {
     writer.write(buffer, 0, fill);
     fill = 0;
   }
 
-  /**
-   * Does not close or flush the wrapped writer.
-   */
+  /** Does not close or flush the wrapped writer. */
   @Override
   public void close() throws IOException {}
 }

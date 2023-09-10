@@ -1,4 +1,3 @@
-
 package epi.test_framework.minimal_json;
 
 import java.io.IOException;
@@ -91,7 +90,7 @@ class JsonLiteral extends JsonValue {
     if (getClass() != object.getClass()) {
       return false;
     }
-    JsonLiteral other = (JsonLiteral)object;
+    JsonLiteral other = (JsonLiteral) object;
     return value.equals(other.value);
   }
 }

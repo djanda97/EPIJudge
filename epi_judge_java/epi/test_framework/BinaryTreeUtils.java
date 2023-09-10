@@ -1,4 +1,3 @@
-
 package epi.test_framework;
 
 import epi.TreeLike;
@@ -25,9 +24,13 @@ public class BinaryTreeUtils {
       this.toLeft = toLeft;
     }
 
-    public TreePath withLeft() { return new TreePath(this, true); }
+    public TreePath withLeft() {
+      return new TreePath(this, true);
+    }
 
-    public TreePath withRight() { return new TreePath(this, false); }
+    public TreePath withRight() {
+      return new TreePath(this, false);
+    }
 
     @Override
     public String toString() {
@@ -55,9 +58,13 @@ public class BinaryTreeUtils {
       this.high = high;
     }
 
-    public IntRange() { this(Integer.MIN_VALUE, Integer.MAX_VALUE); }
+    public IntRange() {
+      this(Integer.MIN_VALUE, Integer.MAX_VALUE);
+    }
 
-    public boolean contains(int value) { return low <= value && value <= high; }
+    public boolean contains(int value) {
+      return low <= value && value <= high;
+    }
 
     public IntRange limitFromBottom(int newLow) {
       if (newLow > low) {
@@ -150,8 +157,7 @@ public class BinaryTreeUtils {
     return result;
   }
 
-  private static <T, Node extends TreeLike<T, Node>> Node findNode(Node node,
-                                                                   T val) {
+  private static <T, Node extends TreeLike<T, Node>> Node findNode(Node node, T val) {
     Stack<Node> s = new Stack<>();
     s.push(node);
 
@@ -172,12 +178,10 @@ public class BinaryTreeUtils {
     return null;
   }
 
-  public static <T, Node extends TreeLike<T, Node>> Node mustFindNode(Node tree,
-                                                                      T val) {
+  public static <T, Node extends TreeLike<T, Node>> Node mustFindNode(Node tree, T val) {
     Node result = findNode(tree, val);
     if (result == null) {
-      throw new RuntimeException(String.valueOf(val) +
-                                 " was not found in the tree");
+      throw new RuntimeException(String.valueOf(val) + " was not found in the tree");
     }
     return result;
   }
@@ -192,8 +196,7 @@ public class BinaryTreeUtils {
     }
   }
 
-  public static <T> boolean equalBinaryTrees(TreeLike<T, ?> tree1,
-                                             TreeLike<T, ?> tree2) {
+  public static <T> boolean equalBinaryTrees(TreeLike<T, ?> tree1, TreeLike<T, ?> tree2) {
     Stack<TwoNodes<T>> s = new Stack<>();
     s.push(new TwoNodes<>(tree1, tree2));
 
@@ -219,15 +222,13 @@ public class BinaryTreeUtils {
   private static class TwoNodesAndPath<T> extends TwoNodes<T> {
     public final TreePath path;
 
-    public TwoNodesAndPath(TreeLike<T, ?> tree1, TreeLike<T, ?> tree2,
-                           TreePath path) {
+    public TwoNodesAndPath(TreeLike<T, ?> tree1, TreeLike<T, ?> tree2, TreePath path) {
       super(tree1, tree2);
       this.path = path;
     }
   }
 
-  public static <T> void assertEqualBinaryTrees(TreeLike<T, ?> expected,
-                                                TreeLike<T, ?> result)
+  public static <T> void assertEqualBinaryTrees(TreeLike<T, ?> expected, TreeLike<T, ?> result)
       throws TestFailure {
     Stack<TwoNodesAndPath<T>> s = new Stack<>();
     s.push(new TwoNodesAndPath<>(expected, result, new TreePath()));
@@ -245,12 +246,12 @@ public class BinaryTreeUtils {
             .withMismatchInfo(nodes.path, expectedData, resultData);
       }
       if (nodes.node1 != null && nodes.node2 != null) {
-        s.push(new TwoNodesAndPath<>(nodes.node1.getLeft(),
-                                     nodes.node2.getLeft(),
-                                     nodes.path.withLeft()));
-        s.push(new TwoNodesAndPath<>(nodes.node1.getRight(),
-                                     nodes.node2.getRight(),
-                                     nodes.path.withRight()));
+        s.push(
+            new TwoNodesAndPath<>(
+                nodes.node1.getLeft(), nodes.node2.getLeft(), nodes.path.withLeft()));
+        s.push(
+            new TwoNodesAndPath<>(
+                nodes.node1.getRight(), nodes.node2.getRight(), nodes.path.withRight()));
       }
     }
   }
@@ -260,16 +261,14 @@ public class BinaryTreeUtils {
     public final TreePath path;
     public final IntRange range;
 
-    public TreePathIntRange(TreeLike<T, ?> tree, TreePath path,
-                            IntRange range) {
+    public TreePathIntRange(TreeLike<T, ?> tree, TreePath path, IntRange range) {
       this.tree = tree;
       this.path = path;
       this.range = range;
     }
   }
 
-  public static void assertTreeIsBst(TreeLike<Integer, ?> tree)
-      throws TestFailure {
+  public static void assertTreeIsBst(TreeLike<Integer, ?> tree) throws TestFailure {
     Stack<TreePathIntRange<Integer>> s = new Stack<>();
     s.push(new TreePathIntRange<>(tree, new TreePath(), new IntRange()));
 
@@ -284,21 +283,21 @@ public class BinaryTreeUtils {
       if (!node.range.contains(value)) {
         throw new TestFailure("Binary search tree constraints violation")
             .withProperty(TestFailure.PropertyName.RESULT, tree)
-            .withMismatchInfo(node.path, "Value in " + node.range.toString(),
-                              value);
+            .withMismatchInfo(node.path, "Value in " + node.range.toString(), value);
       }
-      s.push(new TreePathIntRange<>(node.tree.getLeft(), node.path.withLeft(),
-                                    node.range.limitFromTop(value)));
-      s.push(new TreePathIntRange<>(node.tree.getRight(), node.path.withRight(),
-                                    node.range.limitFromBottom(value)));
+      s.push(
+          new TreePathIntRange<>(
+              node.tree.getLeft(), node.path.withLeft(), node.range.limitFromTop(value)));
+      s.push(
+          new TreePathIntRange<>(
+              node.tree.getRight(), node.path.withRight(), node.range.limitFromBottom(value)));
     }
   }
 
   public static <T> String binaryTreeToString(TreeLike<T, ?> tree) {
     StringBuilder result = new StringBuilder();
     Queue<TreeLike<T, ?>> nodes = new LinkedList<>();
-    Set<TreeLike<T, ?>> visited =
-        Collections.newSetFromMap(new IdentityHashMap<>());
+    Set<TreeLike<T, ?>> visited = Collections.newSetFromMap(new IdentityHashMap<>());
     boolean first = true;
     int nullNodesPending = 0;
 

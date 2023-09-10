@@ -1,14 +1,10 @@
-
 package epi.test_framework.minimal_json;
 
 import java.io.IOException;
 import java.io.Reader;
 import java.io.StringReader;
 
-/**
- * A streaming parser for JSON text. The parser reports all events to a given
- * handler.
- */
+/** A streaming parser for JSON text. The parser reports all events to a given handler. */
 public class JsonParser {
   private static final int MAX_NESTING_LEVEL = 1000;
   private static final int MIN_BUFFER_SIZE = 10;
@@ -37,38 +33,32 @@ public class JsonParser {
    */
 
   /**
-   * Creates a new JsonParser with the given handler. The parser will report all
-   * parser events to
+   * Creates a new JsonParser with the given handler. The parser will report all parser events to
    * this handler.
    *
-   * @param handler
-   *          the handler to process parser events
+   * @param handler the handler to process parser events
    */
   @SuppressWarnings("unchecked")
   public JsonParser(JsonHandler<?, ?> handler) {
     if (handler == null) {
       throw new NullPointerException("handler is null");
     }
-    this.handler = (JsonHandler<Object, Object>)handler;
+    this.handler = (JsonHandler<Object, Object>) handler;
     handler.parser = this;
   }
 
   /**
-   * Parses the given input string. The input must contain a valid JSON value,
-   * optionally padded
+   * Parses the given input string. The input must contain a valid JSON value, optionally padded
    * with whitespace.
    *
-   * @param string
-   *          the input string, must be valid JSON
-   * @throws ParseException
-   *           if the input is not valid JSON
+   * @param string the input string, must be valid JSON
+   * @throws ParseException if the input is not valid JSON
    */
   public void parse(String string) {
     if (string == null) {
       throw new NullPointerException("string is null");
     }
-    int bufferSize = Math.max(MIN_BUFFER_SIZE,
-                              Math.min(DEFAULT_BUFFER_SIZE, string.length()));
+    int bufferSize = Math.max(MIN_BUFFER_SIZE, Math.min(DEFAULT_BUFFER_SIZE, string.length()));
     try {
       parse(new StringReader(string), bufferSize);
     } catch (IOException exception) {
@@ -78,46 +68,31 @@ public class JsonParser {
   }
 
   /**
-   * Reads the entire input from the given reader and parses it as JSON. The
-   * input must contain a
+   * Reads the entire input from the given reader and parses it as JSON. The input must contain a
    * valid JSON value, optionally padded with whitespace.
-   * <p>
-   * Characters are read in chunks into a default-sized input buffer. Hence,
-   * wrapping a reader in an
-   * additional <code>BufferedReader</code> likely won't improve reading
-   * performance.
-   * </p>
    *
-   * @param reader
-   *          the reader to read the input from
-   * @throws IOException
-   *           if an I/O error occurs in the reader
-   * @throws ParseException
-   *           if the input is not valid JSON
+   * <p>Characters are read in chunks into a default-sized input buffer. Hence, wrapping a reader in
+   * an additional <code>BufferedReader</code> likely won't improve reading performance.
+   *
+   * @param reader the reader to read the input from
+   * @throws IOException if an I/O error occurs in the reader
+   * @throws ParseException if the input is not valid JSON
    */
   public void parse(Reader reader) throws IOException {
     parse(reader, DEFAULT_BUFFER_SIZE);
   }
 
   /**
-   * Reads the entire input from the given reader and parses it as JSON. The
-   * input must contain a
+   * Reads the entire input from the given reader and parses it as JSON. The input must contain a
    * valid JSON value, optionally padded with whitespace.
-   * <p>
-   * Characters are read in chunks into an input buffer of the given size.
-   * Hence, wrapping a reader
-   * in an additional <code>BufferedReader</code> likely won't improve reading
-   * performance.
-   * </p>
    *
-   * @param reader
-   *          the reader to read the input from
-   * @param buffersize
-   *          the size of the input buffer in chars
-   * @throws IOException
-   *           if an I/O error occurs in the reader
-   * @throws ParseException
-   *           if the input is not valid JSON
+   * <p>Characters are read in chunks into an input buffer of the given size. Hence, wrapping a
+   * reader in an additional <code>BufferedReader</code> likely won't improve reading performance.
+   *
+   * @param reader the reader to read the input from
+   * @param buffersize the size of the input buffer in chars
+   * @throws IOException if an I/O error occurs in the reader
+   * @throws ParseException if the input is not valid JSON
    */
   public void parse(Reader reader, int buffersize) throws IOException {
     if (reader == null) {
@@ -146,39 +121,39 @@ public class JsonParser {
 
   private void readValue() throws IOException {
     switch (current) {
-    case 'n':
-      readNull();
-      break;
-    case 't':
-      readTrue();
-      break;
-    case 'f':
-      readFalse();
-      break;
-    case '"':
-      readString();
-      break;
-    case '[':
-      readArray();
-      break;
-    case '{':
-      readObject();
-      break;
-    case '-':
-    case '0':
-    case '1':
-    case '2':
-    case '3':
-    case '4':
-    case '5':
-    case '6':
-    case '7':
-    case '8':
-    case '9':
-      readNumber();
-      break;
-    default:
-      throw expected("value");
+      case 'n':
+        readNull();
+        break;
+      case 't':
+        readTrue();
+        break;
+      case 'f':
+        readFalse();
+        break;
+      case '"':
+        readString();
+        break;
+      case '[':
+        readArray();
+        break;
+      case '{':
+        readObject();
+        break;
+      case '-':
+      case '0':
+      case '1':
+      case '2':
+      case '3':
+      case '4':
+      case '5':
+      case '6':
+      case '7':
+      case '8':
+      case '9':
+        readNumber();
+        break;
+      default:
+        throw expected("value");
     }
   }
 
@@ -310,39 +285,39 @@ public class JsonParser {
   private void readEscape() throws IOException {
     read();
     switch (current) {
-    case '"':
-    case '/':
-    case '\\':
-      captureBuffer.append((char)current);
-      break;
-    case 'b':
-      captureBuffer.append('\b');
-      break;
-    case 'f':
-      captureBuffer.append('\f');
-      break;
-    case 'n':
-      captureBuffer.append('\n');
-      break;
-    case 'r':
-      captureBuffer.append('\r');
-      break;
-    case 't':
-      captureBuffer.append('\t');
-      break;
-    case 'u':
-      char[] hexChars = new char[4];
-      for (int i = 0; i < 4; i++) {
-        read();
-        if (!isHexDigit()) {
-          throw expected("hexadecimal digit");
+      case '"':
+      case '/':
+      case '\\':
+        captureBuffer.append((char) current);
+        break;
+      case 'b':
+        captureBuffer.append('\b');
+        break;
+      case 'f':
+        captureBuffer.append('\f');
+        break;
+      case 'n':
+        captureBuffer.append('\n');
+        break;
+      case 'r':
+        captureBuffer.append('\r');
+        break;
+      case 't':
+        captureBuffer.append('\t');
+        break;
+      case 'u':
+        char[] hexChars = new char[4];
+        for (int i = 0; i < 4; i++) {
+          read();
+          if (!isHexDigit()) {
+            throw expected("hexadecimal digit");
+          }
+          hexChars[i] = (char) current;
         }
-        hexChars[i] = (char)current;
-      }
-      captureBuffer.append((char)Integer.parseInt(new String(hexChars), 16));
-      break;
-    default:
-      throw expected("valid escape sequence");
+        captureBuffer.append((char) Integer.parseInt(new String(hexChars), 16));
+        break;
+      default:
+        throw expected("valid escape sequence");
     }
     read();
   }
@@ -356,8 +331,7 @@ public class JsonParser {
       throw expected("digit");
     }
     if (firstDigit != '0') {
-      while (readDigit()) {
-      }
+      while (readDigit()) {}
     }
     readFraction();
     readExponent();
@@ -371,8 +345,7 @@ public class JsonParser {
     if (!readDigit()) {
       throw expected("digit");
     }
-    while (readDigit()) {
-    }
+    while (readDigit()) {}
     return true;
   }
 
@@ -386,8 +359,7 @@ public class JsonParser {
     if (!readDigit()) {
       throw expected("digit");
     }
-    while (readDigit()) {
-    }
+    while (readDigit()) {}
     return true;
   }
 
@@ -479,16 +451,20 @@ public class JsonParser {
   }
 
   private boolean isWhiteSpace() {
-    return current == ' ' || current == '\t' || current == '\n' ||
-        current == '\r';
+    return current == ' ' || current == '\t' || current == '\n' || current == '\r';
   }
 
-  private boolean isDigit() { return current >= '0' && current <= '9'; }
+  private boolean isDigit() {
+    return current >= '0' && current <= '9';
+  }
 
   private boolean isHexDigit() {
-    return current >= '0' && current <= '9' ||
-        current >= 'a' && current <= 'f' || current >= 'A' && current <= 'F';
+    return current >= '0' && current <= '9'
+        || current >= 'a' && current <= 'f'
+        || current >= 'A' && current <= 'F';
   }
 
-  private boolean isEndOfText() { return current == -1; }
+  private boolean isEndOfText() {
+    return current == -1;
+  }
 }

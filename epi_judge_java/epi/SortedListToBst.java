@@ -1,4 +1,5 @@
 package epi;
+
 import epi.test_framework.EpiTest;
 import epi.test_framework.GenericTest;
 import epi.test_framework.TestFailure;
@@ -6,17 +7,18 @@ import epi.test_framework.TimedExecutor;
 
 import java.util.Iterator;
 import java.util.List;
+
 public class SortedListToBst {
   // Returns the root of the corresponding BST. The prev and next fields of the
   // list nodes are used as the BST nodes left and right fields, respectively.
   // The length of the list is given.
-  public static DoublyListNode<Integer>
-  buildBSTFromSortedList(DoublyListNode<Integer> l, int length) {
+  public static DoublyListNode<Integer> buildBSTFromSortedList(
+      DoublyListNode<Integer> l, int length) {
     // TODO - you fill in here.
     return null;
   }
-  public static void compareVectorAndTree(DoublyListNode<Integer> tree,
-                                          Iterator<Integer> it)
+
+  public static void compareVectorAndTree(DoublyListNode<Integer> tree, Iterator<Integer> it)
       throws TestFailure {
     if (tree == null) {
       return;
@@ -35,8 +37,7 @@ public class SortedListToBst {
   }
 
   @EpiTest(testDataFile = "sorted_list_to_bst.tsv")
-  public static void buildBSTFromSortedListWrapper(TimedExecutor executor,
-                                                   List<Integer> l)
+  public static void buildBSTFromSortedListWrapper(TimedExecutor executor, List<Integer> l)
       throws Exception {
     DoublyListNode<Integer> inputList = null;
     for (int i = l.size() - 1; i >= 0; i--) {
@@ -58,9 +59,8 @@ public class SortedListToBst {
 
   public static void main(String[] args) {
     System.exit(
-        GenericTest
-            .runFromAnnotations(args, "SortedListToBst.java",
-                                new Object() {}.getClass().getEnclosingClass())
+        GenericTest.runFromAnnotations(
+                args, "SortedListToBst.java", new Object() {}.getClass().getEnclosingClass())
             .ordinal());
   }
 }

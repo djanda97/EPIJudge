@@ -1,4 +1,5 @@
 package epi;
+
 import epi.test_framework.EpiTest;
 import epi.test_framework.EpiTestComparator;
 import epi.test_framework.EpiTestExpectedType;
@@ -9,9 +10,9 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.function.BiPredicate;
+
 public class KClosestStars {
   @EpiUserType(ctorParams = {double.class, double.class, double.class})
-
   public static class Star implements Comparable<Star> {
     private double x, y, z;
 
@@ -21,7 +22,9 @@ public class KClosestStars {
       this.z = z;
     }
 
-    public double distance() { return Math.sqrt(x * x + y * y + z * z); }
+    public double distance() {
+      return Math.sqrt(x * x + y * y + z * z);
+    }
 
     @Override
     public int compareTo(Star that) {
@@ -38,6 +41,7 @@ public class KClosestStars {
     // TODO - you fill in here.
     return Collections.emptyList();
   }
+
   @EpiTest(testDataFile = "k_closest_stars.tsv")
   public static List<Star> findClosestKStarsWrapper(List<Star> stars, int k) {
     return findClosestKStars(stars.iterator(), k);
@@ -61,9 +65,8 @@ public class KClosestStars {
 
   public static void main(String[] args) {
     System.exit(
-        GenericTest
-            .runFromAnnotations(args, "KClosestStars.java",
-                                new Object() {}.getClass().getEnclosingClass())
+        GenericTest.runFromAnnotations(
+                args, "KClosestStars.java", new Object() {}.getClass().getEnclosingClass())
             .ordinal());
   }
 }

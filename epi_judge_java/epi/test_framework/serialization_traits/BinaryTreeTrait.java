@@ -1,4 +1,3 @@
-
 package epi.test_framework.serialization_traits;
 
 import epi.BinaryTree;
@@ -38,30 +37,27 @@ public class BinaryTreeTrait extends SerializationTrait {
       return buildBstNode(jsonObject.asArray());
     } else {
       throw new RuntimeException(
-          String.format("Binary Tree parser: %s class is not supported",
-                        nodeType.toString()));
+          String.format("Binary Tree parser: %s class is not supported", nodeType.toString()));
     }
   }
 
   @Override
   public List<String> getMetricNames(String argName) {
-    return Arrays.asList(String.format("size(%s)", argName),
-                         String.format("height(%s)", argName));
+    return Arrays.asList(String.format("size(%s)", argName), String.format("height(%s)", argName));
   }
 
   @Override
   @SuppressWarnings("unchecked")
   public List<Integer> getMetrics(Object x) {
-    return List.of(BinaryTreeUtils.binaryTreeSize((TreeLike<Object, ?>)x),
-                   BinaryTreeUtils.binaryTreeHeight((TreeLike<Object, ?>)x));
+    return List.of(
+        BinaryTreeUtils.binaryTreeSize((TreeLike<Object, ?>) x),
+        BinaryTreeUtils.binaryTreeHeight((TreeLike<Object, ?>) x));
   }
 
   private Object buildBinaryTreeNode(JsonArray data) {
     List<BinaryTreeNode<Object>> nodes = new LinkedList<>();
     for (JsonValue node : data) {
-      nodes.add(node.isNull()
-                    ? null
-                    : new BinaryTreeNode<>(innerTypeTrait.parse(node)));
+      nodes.add(node.isNull() ? null : new BinaryTreeNode<>(innerTypeTrait.parse(node)));
     }
 
     Deque<BinaryTreeNode<Object>> candidateChildren = new LinkedList<>(nodes);
@@ -82,8 +78,7 @@ public class BinaryTreeTrait extends SerializationTrait {
   private Object buildBinaryTree(JsonArray data) {
     List<BinaryTree<Object>> nodes = new LinkedList<>();
     for (JsonValue node : data) {
-      nodes.add(node.isNull() ? null
-                              : new BinaryTree<>(innerTypeTrait.parse(node)));
+      nodes.add(node.isNull() ? null : new BinaryTree<>(innerTypeTrait.parse(node)));
     }
 
     Deque<BinaryTree<Object>> candidateChildren = new LinkedList<>(nodes);
@@ -110,8 +105,7 @@ public class BinaryTreeTrait extends SerializationTrait {
   private Object buildBstNode(JsonArray data) {
     List<BstNode<Object>> nodes = new LinkedList<>();
     for (JsonValue node : data) {
-      nodes.add(node.isNull() ? null
-                              : new BstNode<>(innerTypeTrait.parse(node)));
+      nodes.add(node.isNull() ? null : new BstNode<>(innerTypeTrait.parse(node)));
     }
 
     Deque<BstNode<Object>> candidateChildren = new LinkedList<>(nodes);

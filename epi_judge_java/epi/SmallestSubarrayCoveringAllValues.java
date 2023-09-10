@@ -1,10 +1,12 @@
 package epi;
+
 import epi.test_framework.EpiTest;
 import epi.test_framework.GenericTest;
 import epi.test_framework.TestFailure;
 import epi.test_framework.TimedExecutor;
 
 import java.util.List;
+
 public class SmallestSubarrayCoveringAllValues {
 
   public static class Subarray {
@@ -18,18 +20,17 @@ public class SmallestSubarrayCoveringAllValues {
     }
   }
 
-  public static Subarray
-  findSmallestSequentiallyCoveringSubset(List<String> paragraph,
-                                         List<String> keywords) {
+  public static Subarray findSmallestSequentiallyCoveringSubset(
+      List<String> paragraph, List<String> keywords) {
     // TODO - you fill in here.
     return new Subarray(0, 0);
   }
+
   @EpiTest(testDataFile = "smallest_subarray_covering_all_values.tsv")
   public static int findSmallestSequentiallyCoveringSubsetWrapper(
-      TimedExecutor executor, List<String> paragraph, List<String> keywords)
-      throws Exception {
-    Subarray result = executor.run(
-        () -> findSmallestSequentiallyCoveringSubset(paragraph, keywords));
+      TimedExecutor executor, List<String> paragraph, List<String> keywords) throws Exception {
+    Subarray result =
+        executor.run(() -> findSmallestSequentiallyCoveringSubset(paragraph, keywords));
 
     int kwIdx = 0;
     if (result.start < 0) {
@@ -54,9 +55,10 @@ public class SmallestSubarrayCoveringAllValues {
 
   public static void main(String[] args) {
     System.exit(
-        GenericTest
-            .runFromAnnotations(args, "SmallestSubarrayCoveringAllValues.java",
-                                new Object() {}.getClass().getEnclosingClass())
+        GenericTest.runFromAnnotations(
+                args,
+                "SmallestSubarrayCoveringAllValues.java",
+                new Object() {}.getClass().getEnclosingClass())
             .ordinal());
   }
 }

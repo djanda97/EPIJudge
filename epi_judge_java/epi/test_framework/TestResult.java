@@ -1,4 +1,3 @@
-
 package epi.test_framework;
 
 public enum TestResult {

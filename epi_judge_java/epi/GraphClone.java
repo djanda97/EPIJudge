@@ -1,4 +1,5 @@
 package epi;
+
 import epi.test_framework.EpiTest;
 import epi.test_framework.EpiUserType;
 import epi.test_framework.GenericTest;
@@ -12,6 +13,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Queue;
 import java.util.Set;
+
 public class GraphClone {
 
   public static class GraphVertex {
@@ -28,6 +30,7 @@ public class GraphClone {
     // TODO - you fill in here.
     return new GraphVertex(0);
   }
+
   private static List<Integer> copyLabels(List<GraphVertex> edges) {
     List<Integer> labels = new ArrayList<>();
     for (GraphVertex e : edges) {
@@ -36,8 +39,7 @@ public class GraphClone {
     return labels;
   }
 
-  private static void checkGraph(GraphVertex node, List<GraphVertex> graph)
-      throws TestFailure {
+  private static void checkGraph(GraphVertex node, List<GraphVertex> graph) throws TestFailure {
     if (node == null) {
       throw new TestFailure("Graph was not copied");
     }
@@ -52,7 +54,7 @@ public class GraphClone {
         throw new TestFailure("Invalid vertex label");
       }
       List<Integer> label1 = copyLabels(vertex.edges),
-                    label2 = copyLabels(graph.get(vertex.label).edges);
+          label2 = copyLabels(graph.get(vertex.label).edges);
       Collections.sort(label1);
       Collections.sort(label2);
       if (!label1.equals(label2)) {
@@ -79,8 +81,7 @@ public class GraphClone {
   }
 
   @EpiTest(testDataFile = "graph_clone.tsv")
-  public static void cloneGraphTest(int k, List<Edge> edges)
-      throws TestFailure {
+  public static void cloneGraphTest(int k, List<Edge> edges) throws TestFailure {
     if (k <= 0) {
       throw new RuntimeException("Invalid k value");
     }
@@ -100,9 +101,8 @@ public class GraphClone {
 
   public static void main(String[] args) {
     System.exit(
-        GenericTest
-            .runFromAnnotations(args, "GraphClone.java",
-                                new Object() {}.getClass().getEnclosingClass())
+        GenericTest.runFromAnnotations(
+                args, "GraphClone.java", new Object() {}.getClass().getEnclosingClass())
             .ordinal());
   }
 }

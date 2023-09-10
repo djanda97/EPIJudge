@@ -1,4 +1,3 @@
-
 package epi.test_framework;
 
 import java.io.IOException;
@@ -22,8 +21,7 @@ public class TestUtils {
       throw new RuntimeException("Test data file not found");
     }
 
-    List<String> asList =
-        inputData.collect(ArrayList::new, ArrayList::add, ArrayList::addAll);
+    List<String> asList = inputData.collect(ArrayList::new, ArrayList::add, ArrayList::addAll);
 
     List<List<String>> result = new ArrayList<>();
     for (String line : asList) {
@@ -60,8 +58,8 @@ public class TestUtils {
   }
 
   /**
-   * Serialized type name can contain multiple comments, enclosed into brackets.
-   * This method removes all such comments.
+   * Serialized type name can contain multiple comments, enclosed into brackets. This method removes
+   * all such comments.
    */
   public static String filterBracketComments(String s) {
     final String BRACKET_ENCLOSED_COMMENT = "(\\[[^\\]]*\\])";
@@ -69,11 +67,10 @@ public class TestUtils {
   }
 
   /**
-   * Check that result list has the same count of elements as reference.
-   * TestFailure is thrown in case of mismatch.
+   * Check that result list has the same count of elements as reference. TestFailure is thrown in
+   * case of mismatch.
    */
-  public static <T> void assertAllValuesPresent(List<T> reference,
-                                                List<T> result)
+  public static <T> void assertAllValuesPresent(List<T> reference, List<T> result)
       throws TestFailure {
     Map<T, Integer> referenceSet = new HashMap<>();
     for (T x : reference) {
@@ -87,17 +84,18 @@ public class TestUtils {
     List<T> excessItems = new ArrayList<>();
     List<T> missingItems = new ArrayList<>();
 
-    referenceSet.forEach((x, count) -> {
-      if (count < 0) {
-        while (count++ < 0) {
-          excessItems.add(x);
-        }
-      } else if (count > 0) {
-        while (count-- > 0) {
-          missingItems.add(x);
-        }
-      }
-    });
+    referenceSet.forEach(
+        (x, count) -> {
+          if (count < 0) {
+            while (count++ < 0) {
+              excessItems.add(x);
+            }
+          } else if (count > 0) {
+            while (count-- > 0) {
+              missingItems.add(x);
+            }
+          }
+        });
 
     if (!excessItems.isEmpty() || !missingItems.isEmpty()) {
       TestFailure e =
@@ -113,23 +111,17 @@ public class TestUtils {
     }
   }
 
-  /**
-   * Non-exact float comparison
-   */
+  /** Non-exact float comparison */
   public static boolean floatComparison(Float f1, Float f2) {
     float eps = 1E-4f;
     float absEps = 1E-10f;
-    return Math.abs(f1 - f2) <=
-        Math.max(eps * Math.max(Math.abs(f1), Math.abs(f2)), absEps);
+    return Math.abs(f1 - f2) <= Math.max(eps * Math.max(Math.abs(f1), Math.abs(f2)), absEps);
   }
 
-  /**
-   * Non-exact double comparison
-   */
+  /** Non-exact double comparison */
   public static boolean doubleComparison(Double d1, Double d2) {
     double eps = 1E-6;
     double absEps = 1E-20;
-    return Math.abs(d1 - d2) <=
-        Math.max(eps * Math.max(Math.abs(d1), Math.abs(d2)), absEps);
+    return Math.abs(d1 - d2) <= Math.max(eps * Math.max(Math.abs(d1), Math.abs(d2)), absEps);
   }
 }

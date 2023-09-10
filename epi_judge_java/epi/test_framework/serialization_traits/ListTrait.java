@@ -1,4 +1,3 @@
-
 package epi.test_framework.serialization_traits;
 
 import epi.test_framework.minimal_json.JsonValue;
@@ -35,12 +34,14 @@ public class ListTrait extends SerializationTrait {
   @Override
   public List<Integer> getMetrics(Object x) {
     if (x instanceof List) {
-      return Collections.singletonList(((List)x).size());
+      return Collections.singletonList(((List) x).size());
     }
     throw new RuntimeException("Expected List");
   }
 
   // TODO Custom parser that throws TestFailure with mismatch info
 
-  public SerializationTrait getInnerTrait() { return innerTypeTrait; }
+  public SerializationTrait getInnerTrait() {
+    return innerTypeTrait;
+  }
 }

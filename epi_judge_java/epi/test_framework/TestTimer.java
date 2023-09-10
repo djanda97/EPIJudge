@@ -1,4 +1,3 @@
-
 package epi.test_framework;
 
 import java.util.Collections;
@@ -15,14 +14,18 @@ public class TestTimer {
     this.durationUs = durationSeconds * SECOND_TO_MICRO;
   }
 
-  public void start() { start = System.nanoTime(); }
+  public void start() {
+    start = System.nanoTime();
+  }
 
   public void stop() {
     final double NANO_TO_MICRO = 0.001;
-    durationUs += (long)((System.nanoTime() - start) * NANO_TO_MICRO);
+    durationUs += (long) ((System.nanoTime() - start) * NANO_TO_MICRO);
   }
 
-  public long getMicroseconds() { return durationUs; }
+  public long getMicroseconds() {
+    return durationUs;
+  }
 
   public static String durationToString(long dur) {
     final long MILLI_TO_MICRO = 1000;
@@ -42,13 +45,11 @@ public class TestTimer {
 
   public static long[] avgAndMedianFromDuration(List<Long> durations) {
     Collections.sort(durations);
-    long avg =
-        durations.stream().mapToLong(Long::longValue).sum() / durations.size();
-    long median = (durations.size() % 2 == 1)
-                      ? durations.get(durations.size() / 2)
-                      : (durations.get(durations.size() / 2 - 1) +
-                         durations.get(durations.size() / 2)) /
-                            2;
+    long avg = durations.stream().mapToLong(Long::longValue).sum() / durations.size();
+    long median =
+        (durations.size() % 2 == 1)
+            ? durations.get(durations.size() / 2)
+            : (durations.get(durations.size() / 2 - 1) + durations.get(durations.size() / 2)) / 2;
     return new long[] {avg, median};
   }
 }

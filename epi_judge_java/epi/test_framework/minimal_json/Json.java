@@ -1,4 +1,3 @@
-
 package epi.test_framework.minimal_json;
 
 import java.io.IOException;
@@ -6,29 +5,25 @@ import java.io.Reader;
 
 /**
  * This class serves as the entry point to the minimal_json API.
- * <p>
- * To <strong>parse</strong> a given JSON input, use the <code>parse()</code>
- * methods like in this
- * example:
- * </p>
+ *
+ * <p>To <strong>parse</strong> a given JSON input, use the <code>parse()</code> methods like in
+ * this example:
+ *
  * <pre>
  * JsonObject object = Json.parse(string).asObject();
  * </pre>
- * <p>
- * To <strong>create</strong> a JSON data structure to be serialized, use the
- * methods
- * <code>value()</code>, <code>array()</code>, and <code>object()</code>. For
- * example, the following
+ *
+ * <p>To <strong>create</strong> a JSON data structure to be serialized, use the methods <code>
+ * value()</code>, <code>array()</code>, and <code>object()</code>. For example, the following
  * snippet will produce the JSON string <em>{"foo": 23, "bar": true}</em>:
- * </p>
+ *
  * <pre>
  * String string = Json.object().add("foo", 23).add("bar", true).toString();
  * </pre>
- * <p>
- * To create a JSON array from a given Java array, you can use one of the
- * <code>array()</code>
+ *
+ * <p>To create a JSON array from a given Java array, you can use one of the <code>array()</code>
  * methods with varargs parameters:
- * </p>
+ *
  * <pre>
  * String[] names = ...
  * JsonArray array = Json.array(names);
@@ -39,27 +34,19 @@ public final class Json {
     // not meant to be instantiated
   }
 
-  /**
-   * Represents the JSON literal <code>null</code>.
-   */
+  /** Represents the JSON literal <code>null</code>. */
   public static final JsonValue NULL = new JsonLiteral("null");
 
-  /**
-   * Represents the JSON literal <code>true</code>.
-   */
+  /** Represents the JSON literal <code>true</code>. */
   public static final JsonValue TRUE = new JsonLiteral("true");
 
-  /**
-   * Represents the JSON literal <code>false</code>.
-   */
+  /** Represents the JSON literal <code>false</code>. */
   public static final JsonValue FALSE = new JsonLiteral("false");
 
   /**
-   * Returns a JsonValue instance that represents the given <code>int</code>
-   * value.
+   * Returns a JsonValue instance that represents the given <code>int</code> value.
    *
-   * @param value
-   *          the value to get a JSON representation for
+   * @param value the value to get a JSON representation for
    * @return a JSON value that represents the given value
    */
   public static JsonValue value(int value) {
@@ -67,11 +54,9 @@ public final class Json {
   }
 
   /**
-   * Returns a JsonValue instance that represents the given <code>long</code>
-   * value.
+   * Returns a JsonValue instance that represents the given <code>long</code> value.
    *
-   * @param value
-   *          the value to get a JSON representation for
+   * @param value the value to get a JSON representation for
    * @return a JSON value that represents the given value
    */
   public static JsonValue value(long value) {
@@ -79,33 +64,27 @@ public final class Json {
   }
 
   /**
-   * Returns a JsonValue instance that represents the given <code>float</code>
-   * value.
+   * Returns a JsonValue instance that represents the given <code>float</code> value.
    *
-   * @param value
-   *          the value to get a JSON representation for
+   * @param value the value to get a JSON representation for
    * @return a JSON value that represents the given value
    */
   public static JsonValue value(float value) {
     if (Float.isInfinite(value) || Float.isNaN(value)) {
-      throw new IllegalArgumentException(
-          "Infinite and NaN values not permitted in JSON");
+      throw new IllegalArgumentException("Infinite and NaN values not permitted in JSON");
     }
     return new JsonNumber(cutOffPointZero(Float.toString(value)));
   }
 
   /**
-   * Returns a JsonValue instance that represents the given <code>double</code>
-   * value.
+   * Returns a JsonValue instance that represents the given <code>double</code> value.
    *
-   * @param value
-   *          the value to get a JSON representation for
+   * @param value the value to get a JSON representation for
    * @return a JSON value that represents the given value
    */
   public static JsonValue value(double value) {
     if (Double.isInfinite(value) || Double.isNaN(value)) {
-      throw new IllegalArgumentException(
-          "Infinite and NaN values not permitted in JSON");
+      throw new IllegalArgumentException("Infinite and NaN values not permitted in JSON");
     }
     return new JsonNumber(cutOffPointZero(Double.toString(value)));
   }
@@ -113,8 +92,7 @@ public final class Json {
   /**
    * Returns a JsonValue instance that represents the given string.
    *
-   * @param string
-   *          the string to get a JSON representation for
+   * @param string the string to get a JSON representation for
    * @return a JSON value that represents the given string
    */
   public static JsonValue value(String string) {
@@ -122,31 +100,30 @@ public final class Json {
   }
 
   /**
-   * Returns a JsonValue instance that represents the given <code>boolean</code>
-   * value.
+   * Returns a JsonValue instance that represents the given <code>boolean</code> value.
    *
-   * @param value
-   *          the value to get a JSON representation for
+   * @param value the value to get a JSON representation for
    * @return a JSON value that represents the given value
    */
-  public static JsonValue value(boolean value) { return value ? TRUE : FALSE; }
+  public static JsonValue value(boolean value) {
+    return value ? TRUE : FALSE;
+  }
 
   /**
-   * Creates a new empty JsonArray. This is equivalent to creating a new
-   * JsonArray using the
+   * Creates a new empty JsonArray. This is equivalent to creating a new JsonArray using the
    * constructor.
    *
    * @return a new empty JSON array
    */
-  public static JsonArray array() { return new JsonArray(); }
+  public static JsonArray array() {
+    return new JsonArray();
+  }
 
   /**
-   * Creates a new JsonArray that contains the JSON representations of the given
-   * <code>int</code>
+   * Creates a new JsonArray that contains the JSON representations of the given <code>int</code>
    * values.
    *
-   * @param values
-   *          the values to be included in the new JSON array
+   * @param values the values to be included in the new JSON array
    * @return a new JSON array that contains the given values
    */
   public static JsonArray array(int... values) {
@@ -161,12 +138,10 @@ public final class Json {
   }
 
   /**
-   * Creates a new JsonArray that contains the JSON representations of the given
-   * <code>long</code>
+   * Creates a new JsonArray that contains the JSON representations of the given <code>long</code>
    * values.
    *
-   * @param values
-   *          the values to be included in the new JSON array
+   * @param values the values to be included in the new JSON array
    * @return a new JSON array that contains the given values
    */
   public static JsonArray array(long... values) {
@@ -181,12 +156,10 @@ public final class Json {
   }
 
   /**
-   * Creates a new JsonArray that contains the JSON representations of the given
-   * <code>float</code>
+   * Creates a new JsonArray that contains the JSON representations of the given <code>float</code>
    * values.
    *
-   * @param values
-   *          the values to be included in the new JSON array
+   * @param values the values to be included in the new JSON array
    * @return a new JSON array that contains the given values
    */
   public static JsonArray array(float... values) {
@@ -201,12 +174,10 @@ public final class Json {
   }
 
   /**
-   * Creates a new JsonArray that contains the JSON representations of the given
-   * <code>double</code>
+   * Creates a new JsonArray that contains the JSON representations of the given <code>double</code>
    * values.
    *
-   * @param values
-   *          the values to be included in the new JSON array
+   * @param values the values to be included in the new JSON array
    * @return a new JSON array that contains the given values
    */
   public static JsonArray array(double... values) {
@@ -221,11 +192,10 @@ public final class Json {
   }
 
   /**
-   * Creates a new JsonArray that contains the JSON representations of the given
-   * <code>boolean</code> values.
+   * Creates a new JsonArray that contains the JSON representations of the given <code>boolean
+   * </code> values.
    *
-   * @param values
-   *          the values to be included in the new JSON array
+   * @param values the values to be included in the new JSON array
    * @return a new JSON array that contains the given values
    */
   public static JsonArray array(boolean... values) {
@@ -240,11 +210,9 @@ public final class Json {
   }
 
   /**
-   * Creates a new JsonArray that contains the JSON representations of the given
-   * strings.
+   * Creates a new JsonArray that contains the JSON representations of the given strings.
    *
-   * @param strings
-   *          the strings to be included in the new JSON array
+   * @param strings the strings to be included in the new JSON array
    * @return a new JSON array that contains the given strings
    */
   public static JsonArray array(String... strings) {
@@ -259,24 +227,22 @@ public final class Json {
   }
 
   /**
-   * Creates a new empty JsonObject. This is equivalent to creating a new
-   * JsonObject using the
+   * Creates a new empty JsonObject. This is equivalent to creating a new JsonObject using the
    * constructor.
    *
    * @return a new empty JSON object
    */
-  public static JsonObject object() { return new JsonObject(); }
+  public static JsonObject object() {
+    return new JsonObject();
+  }
 
   /**
-   * Parses the given input string as JSON. The input must contain a valid JSON
-   * value, optionally
+   * Parses the given input string as JSON. The input must contain a valid JSON value, optionally
    * padded with whitespace.
    *
-   * @param string
-   *          the input string, must be valid JSON
+   * @param string the input string, must be valid JSON
    * @return a value that represents the parsed JSON
-   * @throws ParseException
-   *           if the input is not valid JSON
+   * @throws ParseException if the input is not valid JSON
    */
   public static JsonValue parse(String string) {
     if (string == null) {
@@ -288,22 +254,16 @@ public final class Json {
   }
 
   /**
-   * Reads the entire input from the given reader and parses it as JSON. The
-   * input must contain a
+   * Reads the entire input from the given reader and parses it as JSON. The input must contain a
    * valid JSON value, optionally padded with whitespace.
-   * <p>
-   * Characters are read in chunks into an input buffer. Hence, wrapping a
-   * reader in an additional
-   * <code>BufferedReader</code> likely won't improve reading performance.
-   * </p>
    *
-   * @param reader
-   *          the reader to read the JSON value from
+   * <p>Characters are read in chunks into an input buffer. Hence, wrapping a reader in an
+   * additional <code>BufferedReader</code> likely won't improve reading performance.
+   *
+   * @param reader the reader to read the JSON value from
    * @return a value that represents the parsed JSON
-   * @throws IOException
-   *           if an I/O error occurs in the reader
-   * @throws ParseException
-   *           if the input is not valid JSON
+   * @throws IOException if an I/O error occurs in the reader
+   * @throws ParseException if the input is not valid JSON
    */
   public static JsonValue parse(Reader reader) throws IOException {
     if (reader == null) {
@@ -374,6 +334,8 @@ public final class Json {
       object.add(name, value);
     }
 
-    JsonValue getValue() { return value; }
+    JsonValue getValue() {
+      return value;
+    }
   }
 }

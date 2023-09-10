@@ -1,4 +1,3 @@
-
 package epi.test_framework.serialization_traits;
 
 import epi.test_framework.minimal_json.JsonValue;

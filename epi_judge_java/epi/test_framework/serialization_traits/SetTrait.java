@@ -1,4 +1,3 @@
-
 package epi.test_framework.serialization_traits;
 
 import epi.test_framework.minimal_json.JsonValue;
@@ -33,7 +32,7 @@ public class SetTrait extends SerializationTrait {
   @Override
   public List<Integer> getMetrics(Object x) {
     if (x instanceof Set) {
-      return Collections.singletonList(((Set)x).size());
+      return Collections.singletonList(((Set) x).size());
     }
     throw new RuntimeException("Expected Set");
   }

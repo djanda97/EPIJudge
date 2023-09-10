@@ -1,4 +1,3 @@
-
 package epi.test_framework.minimal_json;
 
 import java.io.IOException;
@@ -38,17 +37,25 @@ public class JsonWriter {
   // In JavaScript, U+2028 and U+2029 characters count as line endings and must
   // be encoded.
   // http://stackoverflow.com/questions/2965293/javascript-parse-error-on-u2028-unicode-character
-  private static final char[] UNICODE_2028_CHARS = {'\\', 'u', '2',
-                                                    '0',  '2', '8'};
-  private static final char[] UNICODE_2029_CHARS = {'\\', 'u', '2',
-                                                    '0',  '2', '9'};
-  private static final char[] HEX_DIGITS = {'0', '1', '2', '3', '4', '5',
-                                            '6', '7', '8', '9', 'a', 'b',
-                                            'c', 'd', 'e', 'f'};
+  private static final char[] UNICODE_2028_CHARS = {
+    '\\', 'u', '2',
+    '0', '2', '8'
+  };
+  private static final char[] UNICODE_2029_CHARS = {
+    '\\', 'u', '2',
+    '0', '2', '9'
+  };
+  private static final char[] HEX_DIGITS = {
+    '0', '1', '2', '3', '4', '5',
+    '6', '7', '8', '9', 'a', 'b',
+    'c', 'd', 'e', 'f'
+  };
 
   protected final Writer writer;
 
-  JsonWriter(Writer writer) { this.writer = writer; }
+  JsonWriter(Writer writer) {
+    this.writer = writer;
+  }
 
   protected void writeLiteral(String value) throws IOException {
     writer.write(value);
@@ -64,15 +71,25 @@ public class JsonWriter {
     writer.write('"');
   }
 
-  protected void writeArrayOpen() throws IOException { writer.write('['); }
+  protected void writeArrayOpen() throws IOException {
+    writer.write('[');
+  }
 
-  protected void writeArrayClose() throws IOException { writer.write(']'); }
+  protected void writeArrayClose() throws IOException {
+    writer.write(']');
+  }
 
-  protected void writeArraySeparator() throws IOException { writer.write(','); }
+  protected void writeArraySeparator() throws IOException {
+    writer.write(',');
+  }
 
-  protected void writeObjectOpen() throws IOException { writer.write('{'); }
+  protected void writeObjectOpen() throws IOException {
+    writer.write('{');
+  }
 
-  protected void writeObjectClose() throws IOException { writer.write('}'); }
+  protected void writeObjectClose() throws IOException {
+    writer.write('}');
+  }
 
   protected void writeMemberName(String name) throws IOException {
     writer.write('"');
@@ -133,11 +150,6 @@ public class JsonWriter {
     if (ch == '\t') {
       return TAB_CHARS;
     }
-    return new char[] {'\\',
-                       'u',
-                       '0',
-                       '0',
-                       HEX_DIGITS[ch >> 4 & 0x000f],
-                       HEX_DIGITS[ch & 0x000f]};
+    return new char[] {'\\', 'u', '0', '0', HEX_DIGITS[ch >> 4 & 0x000f], HEX_DIGITS[ch & 0x000f]};
   }
 }

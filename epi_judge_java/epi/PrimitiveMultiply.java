@@ -1,6 +1,8 @@
 package epi;
+
 import epi.test_framework.EpiTest;
 import epi.test_framework.GenericTest;
+
 public class PrimitiveMultiply {
   @EpiTest(testDataFile = "primitive_multiply.tsv")
   public static long multiply(long x, long y) {
@@ -10,9 +12,8 @@ public class PrimitiveMultiply {
 
   public static void main(String[] args) {
     System.exit(
-        GenericTest
-            .runFromAnnotations(args, "PrimitiveMultiply.java",
-                                new Object() {}.getClass().getEnclosingClass())
+        GenericTest.runFromAnnotations(
+                args, "PrimitiveMultiply.java", new Object() {}.getClass().getEnclosingClass())
             .ordinal());
   }
 }

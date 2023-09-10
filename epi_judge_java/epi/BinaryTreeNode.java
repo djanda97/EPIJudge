@@ -1,4 +1,3 @@
-
 package epi;
 
 public class BinaryTreeNode<T> extends TreeLike<T, BinaryTreeNode<T>> {
@@ -7,10 +6,11 @@ public class BinaryTreeNode<T> extends TreeLike<T, BinaryTreeNode<T>> {
 
   public BinaryTreeNode() {}
 
-  public BinaryTreeNode(T data) { this.data = data; }
+  public BinaryTreeNode(T data) {
+    this.data = data;
+  }
 
-  public BinaryTreeNode(T data, BinaryTreeNode<T> left,
-                        BinaryTreeNode<T> right) {
+  public BinaryTreeNode(T data, BinaryTreeNode<T> left, BinaryTreeNode<T> right) {
     this.data = data;
     this.left = left;
     this.right = right;

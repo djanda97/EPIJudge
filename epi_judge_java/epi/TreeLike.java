@@ -1,11 +1,12 @@
-
 package epi;
 
 import epi.test_framework.BinaryTreeUtils;
 
 public abstract class TreeLike<T, Node extends TreeLike<T, Node>> {
   public abstract T getData();
+
   public abstract Node getLeft();
+
   public abstract Node getRight();
 
   @Override
@@ -15,8 +16,7 @@ public abstract class TreeLike<T, Node extends TreeLike<T, Node>> {
       return true;
     }
     if (o instanceof TreeLike<?, ?>) {
-      return BinaryTreeUtils.equalBinaryTrees((TreeLike<Object, ?>)this,
-                                              (TreeLike<Object, ?>)o);
+      return BinaryTreeUtils.equalBinaryTrees((TreeLike<Object, ?>) this, (TreeLike<Object, ?>) o);
     }
     return false;
   }

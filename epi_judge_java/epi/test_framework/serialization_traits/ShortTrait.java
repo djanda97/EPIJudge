@@ -1,4 +1,3 @@
-
 package epi.test_framework.serialization_traits;
 
 import epi.test_framework.minimal_json.JsonValue;
@@ -14,7 +13,7 @@ public class ShortTrait extends SerializationTrait {
 
   @Override
   public Object parse(JsonValue jsonObject) {
-    return (short)jsonObject.asInt();
+    return (short) jsonObject.asInt();
   }
 
   @Override
@@ -25,7 +24,7 @@ public class ShortTrait extends SerializationTrait {
   @Override
   public List<Integer> getMetrics(Object x) {
     if (x instanceof Short) {
-      return Collections.singletonList(Math.abs((int)x));
+      return Collections.singletonList(Math.abs((int) x));
     }
     throw new RuntimeException("Expected Short");
   }

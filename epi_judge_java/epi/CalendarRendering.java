@@ -1,12 +1,13 @@
 package epi;
+
 import epi.test_framework.EpiTest;
 import epi.test_framework.EpiUserType;
 import epi.test_framework.GenericTest;
 
 import java.util.List;
+
 public class CalendarRendering {
   @EpiUserType(ctorParams = {int.class, int.class})
-
   public static class Event {
     public int start, finish;
 
@@ -27,7 +28,6 @@ public class CalendarRendering {
   }
 
   @EpiTest(testDataFile = "calendar_rendering.tsv")
-
   public static int findMaxSimultaneousEvents(List<Event> A) {
     // TODO - you fill in here.
     return 0;
@@ -35,9 +35,8 @@ public class CalendarRendering {
 
   public static void main(String[] args) {
     System.exit(
-        GenericTest
-            .runFromAnnotations(args, "CalendarRendering.java",
-                                new Object() {}.getClass().getEnclosingClass())
+        GenericTest.runFromAnnotations(
+                args, "CalendarRendering.java", new Object() {}.getClass().getEnclosingClass())
             .ordinal());
   }
 }

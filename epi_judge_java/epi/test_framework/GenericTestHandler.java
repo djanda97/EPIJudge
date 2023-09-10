@@ -1,4 +1,3 @@
-
 package epi.test_framework;
 
 import epi.TreeLike;
@@ -19,25 +18,22 @@ import java.util.function.BiFunction;
 import java.util.function.BiPredicate;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+
 /**
- * The central class in generic test runner framework.
- * It is responsible for constructing string deserializers
- * based on the argument types of the tested method (obtained with reflexions)
- * (see {@link #GenericTestHandler(Method, BiPredicate, Field)},
- * asserting that the method signature matches the one from the test file header
- * (see {@link #parseSignature(List)} and
- * executing tests on the provided method (which includes
- * the deserialization of the provided arguments and the expected value,
- * invocation of the target method with these arguments and
- * comparison of the computed result with the expected value)
- * (see {@link #runTest(long, BiFunction, List)}).
- * <p>
- * {@link #parseSignature(List)} and {@link #runTest(long, BiFunction, List)}
- * throw {@link RuntimeException} in case of any error or assertion failure.
- * This exception terminates testing and, consequently, the test program. If
- * tested method throws {@link TestFailure} or {@link StackOverflowError}, the
- * current test is marked as failed and the execution goes on. In case of any
- * other exception thrown by the tested method, the test program is terminated.
+ * The central class in generic test runner framework. It is responsible for constructing string
+ * deserializers based on the argument types of the tested method (obtained with reflexions) (see
+ * {@link #GenericTestHandler(Method, BiPredicate, Field)}, asserting that the method signature
+ * matches the one from the test file header (see {@link #parseSignature(List)} and executing tests
+ * on the provided method (which includes the deserialization of the provided arguments and the
+ * expected value, invocation of the target method with these arguments and comparison of the
+ * computed result with the expected value) (see {@link #runTest(long, BiFunction, List)}).
+ *
+ * <p>{@link #parseSignature(List)} and {@link #runTest(long, BiFunction, List)} throw {@link
+ * RuntimeException} in case of any error or assertion failure. This exception terminates testing
+ * and, consequently, the test program. If tested method throws {@link TestFailure} or {@link
+ * StackOverflowError}, the current test is marked as failed and the execution goes on. In case of
+ * any other exception thrown by the tested method, the test program is terminated.
+ *
  * <p>
  */
 public class GenericTestHandler {
@@ -51,24 +47,20 @@ public class GenericTestHandler {
   private boolean customExpectedType;
 
   /**
-   * This constructor initializes type parsers for all arguments and return type
-   * of func.
+   * This constructor initializes type parsers for all arguments and return type of func.
    *
-   * @param func         - a method to test.
-   * @param comp         - an optional comp for result. If comp is null, values
-   *                       are compared with equals().
-   * @param expectedType - can be used with a custom comp that has different
-   *                       types for expected and result arguments.
+   * @param func - a method to test.
+   * @param comp - an optional comp for result. If comp is null, values are compared with equals().
+   * @param expectedType - can be used with a custom comp that has different types for expected and
+   *     result arguments.
    */
-  public GenericTestHandler(Method func, BiPredicate<Object, Object> comp,
-                            Field expectedType) {
+  public GenericTestHandler(Method func, BiPredicate<Object, Object> comp, Field expectedType) {
     this.func = func;
     this.comp = comp;
     hasExecutorHook = false;
     paramTypes = List.of(func.getGenericParameterTypes());
 
-    if (paramTypes.size() >= 1 &&
-        paramTypes.get(0).equals(TimedExecutor.class)) {
+    if (paramTypes.size() >= 1 && paramTypes.get(0).equals(TimedExecutor.class)) {
       hasExecutorHook = true;
       paramTypes = paramTypes.subList(1, paramTypes.size());
     }
@@ -77,12 +69,9 @@ public class GenericTestHandler {
       throw new RuntimeException("This program uses deprecated TestTimer hook");
     }
 
-    paramTraits = paramTypes.stream()
-                      .map(TraitsFactory::getTrait)
-                      .collect(Collectors.toList());
-    paramNames = Arrays.stream(func.getParameters())
-                     .map(Parameter::getName)
-                     .collect(Collectors.toList());
+    paramTraits = paramTypes.stream().map(TraitsFactory::getTrait).collect(Collectors.toList());
+    paramNames =
+        Arrays.stream(func.getParameters()).map(Parameter::getName).collect(Collectors.toList());
     if (hasExecutorHook) {
       paramNames.remove(0);
     }
@@ -97,8 +86,8 @@ public class GenericTestHandler {
   }
 
   /**
-   * This method ensures that test data header matches with the signature
-   * of the method provided in constructor.
+   * This method ensures that test data header matches with the signature of the method provided in
+   * constructor.
    *
    * @param signature - the header from a test data file.
    */
@@ -108,47 +97,44 @@ public class GenericTestHandler {
     }
 
     for (int i = 0; i < paramTypes.size(); i++) {
-      matchTypeNames(paramTraits.get(i).name(), signature.get(i),
-                     String.format("%d argument", i));
+      matchTypeNames(paramTraits.get(i).name(), signature.get(i), String.format("%d argument", i));
     }
 
     if (!customExpectedType) {
-      matchTypeNames(retValueTrait.name(), signature.get(signature.size() - 1),
-                     "Return value");
+      matchTypeNames(retValueTrait.name(), signature.get(signature.size() - 1), "Return value");
     }
   }
 
-  private void matchTypeNames(String expected, String fromTestData,
-                              String sourceName) {
+  private void matchTypeNames(String expected, String fromTestData, String sourceName) {
     if (!expected.equals(TestUtils.filterBracketComments(fromTestData))) {
       throw new RuntimeException(
-          String.format("%s type mismatch: expected %s, got %s", sourceName,
-                        expected, fromTestData));
+          String.format(
+              "%s type mismatch: expected %s, got %s", sourceName, expected, fromTestData));
     }
   }
 
   /**
-   * This method is invoked for each row in a test data file (except the
-   * header). It deserializes the list of arguments and calls the user method
-   * with them.
+   * This method is invoked for each row in a test data file (except the header). It deserializes
+   * the list of arguments and calls the user method with them.
    *
    * @param timeoutSeconds - number of seconds to timeout.
    * @param metricsOverride -
    * @param testArgs - serialized arguments.
-   * @return array, that contains [result of comparison of expected and result,
-   * expected, result]. Two last entries are omitted in case of the void return
-   * type
+   * @return array, that contains [result of comparison of expected and result, expected, result].
+   *     Two last entries are omitted in case of the void return type
    */
   public TestOutput runTest(
       long timeoutSeconds,
       BiFunction<List<Integer>, List<Object>, List<Integer>> metricsOverride,
-      List<String> testArgs) throws Exception, Error {
+      List<String> testArgs)
+      throws Exception, Error {
     try {
       int expectedParamCount = paramTraits.size() + (expectedIsVoid() ? 0 : 1);
       if (testArgs.size() != expectedParamCount) {
         throw new RuntimeException(
-            String.format("Invalid argument count: expected %d, actual %d",
-                          expectedParamCount, testArgs.size()));
+            String.format(
+                "Invalid argument count: expected %d, actual %d",
+                expectedParamCount, testArgs.size()));
       }
 
       List<Object> parsed = new ArrayList<>();
@@ -169,8 +155,7 @@ public class GenericTestHandler {
       }
 
       if (!expectedIsVoid()) {
-        Object expected =
-            retValueTrait.parse(Json.parse(testArgs.get(testArgs.size() - 1)));
+        Object expected = retValueTrait.parse(Json.parse(testArgs.get(testArgs.size() - 1)));
         assertResultsEqual(expected, result);
       }
 
@@ -180,9 +165,9 @@ public class GenericTestHandler {
     } catch (InvocationTargetException e) {
       Throwable t = e.getCause();
       if (t instanceof Exception) {
-        throw(Exception) t;
+        throw (Exception) t;
       } else if (t instanceof Error) {
-        throw(Error) t;
+        throw (Error) t;
       } else {
         // Improbable except for intended attempts to break the code, but anyway
         throw new RuntimeException(t);
@@ -191,23 +176,19 @@ public class GenericTestHandler {
   }
 
   @SuppressWarnings("unchecked")
-  private void assertResultsEqual(Object expected, Object result)
-      throws TestFailure {
+  private void assertResultsEqual(Object expected, Object result) throws TestFailure {
     boolean comparisonResult;
     if (comp != null) {
       comparisonResult = comp.test(expected, result);
     } else if (expected == null) {
       comparisonResult = result == null;
     } else if (expected instanceof Float && result instanceof Float) {
-      comparisonResult =
-          TestUtils.floatComparison((Float)expected, (Float)result);
+      comparisonResult = TestUtils.floatComparison((Float) expected, (Float) result);
     } else if (expected instanceof Double && result instanceof Double) {
-      comparisonResult =
-          TestUtils.doubleComparison((Double)expected, (Double)result);
-    } else if (expected instanceof TreeLike<?, ?> && result instanceof
-                                                         TreeLike<?, ?>) {
-      BinaryTreeUtils.assertEqualBinaryTrees((TreeLike<Object, ?>)expected,
-                                             (TreeLike<Object, ?>)result);
+      comparisonResult = TestUtils.doubleComparison((Double) expected, (Double) result);
+    } else if (expected instanceof TreeLike<?, ?> && result instanceof TreeLike<?, ?>) {
+      BinaryTreeUtils.assertEqualBinaryTrees(
+          (TreeLike<Object, ?>) expected, (TreeLike<Object, ?>) result);
       return;
     } else {
       comparisonResult = expected.equals(result);
@@ -233,7 +214,11 @@ public class GenericTestHandler {
         .collect(Collectors.toList());
   }
 
-  public boolean expectedIsVoid() { return retValueTrait.isVoid(); }
+  public boolean expectedIsVoid() {
+    return retValueTrait.isVoid();
+  }
 
-  public List<String> paramNames() { return paramNames; }
+  public List<String> paramNames() {
+    return paramNames;
+  }
 }

@@ -1,4 +1,3 @@
-
 package epi.test_framework.minimal_json;
 
 import java.io.IOException;
@@ -10,29 +9,20 @@ import java.util.Iterator;
 import java.util.List;
 
 /**
- * Represents a JSON object, a set of name/value pairs, where the names are
- * strings and the values
+ * Represents a JSON object, a set of name/value pairs, where the names are strings and the values
  * are JSON values.
- * <p>
- * Members can be added using the <code>add(String, ...)</code> methods which
- * accept instances of
- * {@link JsonValue}, strings, primitive numbers, and boolean values. To modify
- * certain values of an
- * object, use the <code>set(String, ...)</code> methods. Please note that the
- * <code>add</code>
- * methods are faster than <code>set</code> as they do not search for existing
- * members. On the other
- * hand, the <code>add</code> methods do not prevent adding multiple members
- * with the same name.
+ *
+ * <p>Members can be added using the <code>add(String, ...)</code> methods which accept instances of
+ * {@link JsonValue}, strings, primitive numbers, and boolean values. To modify certain values of an
+ * object, use the <code>set(String, ...)</code> methods. Please note that the <code>add</code>
+ * methods are faster than <code>set</code> as they do not search for existing members. On the other
+ * hand, the <code>add</code> methods do not prevent adding multiple members with the same name.
  * Duplicate names are discouraged but not prohibited by JSON.
- * </p>
- * <p>
- * Members can be accessed by their name using {@link #get(String)}. A list of
- * all names can be
- * obtained from the method {@link #names()}. This class also supports iterating
- * over the members in
+ *
+ * <p>Members can be accessed by their name using {@link #get(String)}. A list of all names can be
+ * obtained from the method {@link #names()}. This class also supports iterating over the members in
  * document order using an {@link #iterator()} or an enhanced for loop:
- * </p>
+ *
  * <pre>
  * for (Member member : jsonObject) {
  *   String name = member.getName();
@@ -40,24 +30,16 @@ import java.util.List;
  *   ...
  * }
  * </pre>
- * <p>
- * Even though JSON objects are unordered by definition, instances of this class
- * preserve the order
- * of members to allow processing in document order and to guarantee a
- * predictable output.
- * </p>
- * <p>
- * Note that this class is <strong>not thread-safe</strong>. If multiple threads
- * access a
- * <code>JsonObject</code> instance concurrently, while at least one of these
- * threads modifies the
- * contents of this object, access to the instance must be synchronized
- * externally. Failure to do so
+ *
+ * <p>Even though JSON objects are unordered by definition, instances of this class preserve the
+ * order of members to allow processing in document order and to guarantee a predictable output.
+ *
+ * <p>Note that this class is <strong>not thread-safe</strong>. If multiple threads access a <code>
+ * JsonObject</code> instance concurrently, while at least one of these threads modifies the
+ * contents of this object, access to the instance must be synchronized externally. Failure to do so
  * may lead to an inconsistent state.
- * </p>
- * <p>
- * This class is <strong>not supposed to be extended</strong> by clients.
- * </p>
+ *
+ * <p>This class is <strong>not supposed to be extended</strong> by clients.
  */
 @SuppressWarnings("serial") // use default serial UID
 public class JsonObject extends JsonValue implements Iterable<Member> {
@@ -65,9 +47,7 @@ public class JsonObject extends JsonValue implements Iterable<Member> {
   private final List<JsonValue> values;
   private transient HashIndexTable table;
 
-  /**
-   * Creates a new empty JsonObject.
-   */
+  /** Creates a new empty JsonObject. */
   public JsonObject() {
     names = new ArrayList<String>();
     values = new ArrayList<JsonValue>();
@@ -75,14 +55,13 @@ public class JsonObject extends JsonValue implements Iterable<Member> {
   }
 
   /**
-   * Creates a new JsonObject, initialized with the contents of the specified
-   * JSON object.
+   * Creates a new JsonObject, initialized with the contents of the specified JSON object.
    *
-   * @param object
-   *          the JSON object to get the initial contents from, must not be
-   * <code>null</code>
+   * @param object the JSON object to get the initial contents from, must not be <code>null</code>
    */
-  public JsonObject(JsonObject object) { this(object, false); }
+  public JsonObject(JsonObject object) {
+    this(object, false);
+  }
 
   private JsonObject(JsonObject object, boolean unmodifiable) {
     if (object == null) {
@@ -101,25 +80,17 @@ public class JsonObject extends JsonValue implements Iterable<Member> {
 
   /**
    * Reads a JSON object from the given reader.
-   * <p>
-   * Characters are read in chunks and buffered internally, therefore wrapping
-   * an existing reader in
-   * an additional <code>BufferedReader</code> does <strong>not</strong> improve
-   * reading
-   * performance.
-   * </p>
    *
-   * @param reader
-   *          the reader to read the JSON object from
+   * <p>Characters are read in chunks and buffered internally, therefore wrapping an existing reader
+   * in an additional <code>BufferedReader</code> does <strong>not</strong> improve reading
+   * performance.
+   *
+   * @param reader the reader to read the JSON object from
    * @return the JSON object that has been read
-   * @throws IOException
-   *           if an I/O error occurs in the reader
-   * @throws ParseException
-   *           if the input is not valid JSON
-   * @throws UnsupportedOperationException
-   *           if the input does not contain a JSON object
-   * @deprecated Use {@link Json#parse(Reader)}{@link JsonValue#asObject()
-   * .asObject()} instead
+   * @throws IOException if an I/O error occurs in the reader
+   * @throws ParseException if the input is not valid JSON
+   * @throws UnsupportedOperationException if the input does not contain a JSON object
+   * @deprecated Use {@link Json#parse(Reader)}{@link JsonValue#asObject() .asObject()} instead
    */
   @Deprecated
   public static JsonObject readFrom(Reader reader) throws IOException {
@@ -129,15 +100,11 @@ public class JsonObject extends JsonValue implements Iterable<Member> {
   /**
    * Reads a JSON object from the given string.
    *
-   * @param string
-   *          the string that contains the JSON object
+   * @param string the string that contains the JSON object
    * @return the JSON object that has been read
-   * @throws ParseException
-   *           if the input is not valid JSON
-   * @throws UnsupportedOperationException
-   *           if the input does not contain a JSON object
-   * @deprecated Use {@link Json#parse(String)}{@link JsonValue#asObject()
-   * .asObject()} instead
+   * @throws ParseException if the input is not valid JSON
+   * @throws UnsupportedOperationException if the input does not contain a JSON object
+   * @deprecated Use {@link Json#parse(String)}{@link JsonValue#asObject() .asObject()} instead
    */
   @Deprecated
   public static JsonObject readFrom(String string) {
@@ -145,19 +112,14 @@ public class JsonObject extends JsonValue implements Iterable<Member> {
   }
 
   /**
-   * Returns an unmodifiable JsonObject for the specified one. This method
-   * allows to provide
+   * Returns an unmodifiable JsonObject for the specified one. This method allows to provide
    * read-only access to a JsonObject.
-   * <p>
-   * The returned JsonObject is backed by the given object and reflect changes
-   * that happen to it.
-   * Attempts to modify the returned JsonObject result in an
-   * <code>UnsupportedOperationException</code>.
-   * </p>
    *
-   * @param object
-   *          the JsonObject for which an unmodifiable JsonObject is to be
-   * returned
+   * <p>The returned JsonObject is backed by the given object and reflect changes that happen to it.
+   * Attempts to modify the returned JsonObject result in an <code>UnsupportedOperationException
+   * </code>.
+   *
+   * @param object the JsonObject for which an unmodifiable JsonObject is to be returned
    * @return an unmodifiable view of the specified JsonObject
    */
   public static JsonObject unmodifiableObject(JsonObject object) {
@@ -165,27 +127,18 @@ public class JsonObject extends JsonValue implements Iterable<Member> {
   }
 
   /**
-   * Appends a new member to the end of this object, with the specified name and
-   * the JSON
+   * Appends a new member to the end of this object, with the specified name and the JSON
    * representation of the specified <code>int</code> value.
-   * <p>
-   * This method <strong>does not prevent duplicate names</strong>. Calling this
-   * method with a name
-   * that already exists in the object will append another member with the same
-   * name. In order to
-   * replace existing members, use the method <code>set(name, value)</code>
-   * instead. However,
-   * <strong> <em>add</em> is much faster than <em>set</em></strong> (because it
-   * does not need to
-   * search for existing members). Therefore <em>add</em> should be preferred
-   * when constructing new
-   * objects.
-   * </p>
    *
-   * @param name
-   *          the name of the member to add
-   * @param value
-   *          the value of the member to add
+   * <p>This method <strong>does not prevent duplicate names</strong>. Calling this method with a
+   * name that already exists in the object will append another member with the same name. In order
+   * to replace existing members, use the method <code>set(name, value)</code> instead. However,
+   * <strong> <em>add</em> is much faster than <em>set</em></strong> (because it does not need to
+   * search for existing members). Therefore <em>add</em> should be preferred when constructing new
+   * objects.
+   *
+   * @param name the name of the member to add
+   * @param value the value of the member to add
    * @return the object itself, to enable method chaining
    */
   public JsonObject add(String name, int value) {
@@ -194,27 +147,18 @@ public class JsonObject extends JsonValue implements Iterable<Member> {
   }
 
   /**
-   * Appends a new member to the end of this object, with the specified name and
-   * the JSON
+   * Appends a new member to the end of this object, with the specified name and the JSON
    * representation of the specified <code>long</code> value.
-   * <p>
-   * This method <strong>does not prevent duplicate names</strong>. Calling this
-   * method with a name
-   * that already exists in the object will append another member with the same
-   * name. In order to
-   * replace existing members, use the method <code>set(name, value)</code>
-   * instead. However,
-   * <strong> <em>add</em> is much faster than <em>set</em></strong> (because it
-   * does not need to
-   * search for existing members). Therefore <em>add</em> should be preferred
-   * when constructing new
-   * objects.
-   * </p>
    *
-   * @param name
-   *          the name of the member to add
-   * @param value
-   *          the value of the member to add
+   * <p>This method <strong>does not prevent duplicate names</strong>. Calling this method with a
+   * name that already exists in the object will append another member with the same name. In order
+   * to replace existing members, use the method <code>set(name, value)</code> instead. However,
+   * <strong> <em>add</em> is much faster than <em>set</em></strong> (because it does not need to
+   * search for existing members). Therefore <em>add</em> should be preferred when constructing new
+   * objects.
+   *
+   * @param name the name of the member to add
+   * @param value the value of the member to add
    * @return the object itself, to enable method chaining
    */
   public JsonObject add(String name, long value) {
@@ -223,27 +167,18 @@ public class JsonObject extends JsonValue implements Iterable<Member> {
   }
 
   /**
-   * Appends a new member to the end of this object, with the specified name and
-   * the JSON
+   * Appends a new member to the end of this object, with the specified name and the JSON
    * representation of the specified <code>float</code> value.
-   * <p>
-   * This method <strong>does not prevent duplicate names</strong>. Calling this
-   * method with a name
-   * that already exists in the object will append another member with the same
-   * name. In order to
-   * replace existing members, use the method <code>set(name, value)</code>
-   * instead. However,
-   * <strong> <em>add</em> is much faster than <em>set</em></strong> (because it
-   * does not need to
-   * search for existing members). Therefore <em>add</em> should be preferred
-   * when constructing new
-   * objects.
-   * </p>
    *
-   * @param name
-   *          the name of the member to add
-   * @param value
-   *          the value of the member to add
+   * <p>This method <strong>does not prevent duplicate names</strong>. Calling this method with a
+   * name that already exists in the object will append another member with the same name. In order
+   * to replace existing members, use the method <code>set(name, value)</code> instead. However,
+   * <strong> <em>add</em> is much faster than <em>set</em></strong> (because it does not need to
+   * search for existing members). Therefore <em>add</em> should be preferred when constructing new
+   * objects.
+   *
+   * @param name the name of the member to add
+   * @param value the value of the member to add
    * @return the object itself, to enable method chaining
    */
   public JsonObject add(String name, float value) {
@@ -252,27 +187,18 @@ public class JsonObject extends JsonValue implements Iterable<Member> {
   }
 
   /**
-   * Appends a new member to the end of this object, with the specified name and
-   * the JSON
+   * Appends a new member to the end of this object, with the specified name and the JSON
    * representation of the specified <code>double</code> value.
-   * <p>
-   * This method <strong>does not prevent duplicate names</strong>. Calling this
-   * method with a name
-   * that already exists in the object will append another member with the same
-   * name. In order to
-   * replace existing members, use the method <code>set(name, value)</code>
-   * instead. However,
-   * <strong> <em>add</em> is much faster than <em>set</em></strong> (because it
-   * does not need to
-   * search for existing members). Therefore <em>add</em> should be preferred
-   * when constructing new
-   * objects.
-   * </p>
    *
-   * @param name
-   *          the name of the member to add
-   * @param value
-   *          the value of the member to add
+   * <p>This method <strong>does not prevent duplicate names</strong>. Calling this method with a
+   * name that already exists in the object will append another member with the same name. In order
+   * to replace existing members, use the method <code>set(name, value)</code> instead. However,
+   * <strong> <em>add</em> is much faster than <em>set</em></strong> (because it does not need to
+   * search for existing members). Therefore <em>add</em> should be preferred when constructing new
+   * objects.
+   *
+   * @param name the name of the member to add
+   * @param value the value of the member to add
    * @return the object itself, to enable method chaining
    */
   public JsonObject add(String name, double value) {
@@ -281,27 +207,18 @@ public class JsonObject extends JsonValue implements Iterable<Member> {
   }
 
   /**
-   * Appends a new member to the end of this object, with the specified name and
-   * the JSON
+   * Appends a new member to the end of this object, with the specified name and the JSON
    * representation of the specified <code>boolean</code> value.
-   * <p>
-   * This method <strong>does not prevent duplicate names</strong>. Calling this
-   * method with a name
-   * that already exists in the object will append another member with the same
-   * name. In order to
-   * replace existing members, use the method <code>set(name, value)</code>
-   * instead. However,
-   * <strong> <em>add</em> is much faster than <em>set</em></strong> (because it
-   * does not need to
-   * search for existing members). Therefore <em>add</em> should be preferred
-   * when constructing new
-   * objects.
-   * </p>
    *
-   * @param name
-   *          the name of the member to add
-   * @param value
-   *          the value of the member to add
+   * <p>This method <strong>does not prevent duplicate names</strong>. Calling this method with a
+   * name that already exists in the object will append another member with the same name. In order
+   * to replace existing members, use the method <code>set(name, value)</code> instead. However,
+   * <strong> <em>add</em> is much faster than <em>set</em></strong> (because it does not need to
+   * search for existing members). Therefore <em>add</em> should be preferred when constructing new
+   * objects.
+   *
+   * @param name the name of the member to add
+   * @param value the value of the member to add
    * @return the object itself, to enable method chaining
    */
   public JsonObject add(String name, boolean value) {
@@ -310,27 +227,18 @@ public class JsonObject extends JsonValue implements Iterable<Member> {
   }
 
   /**
-   * Appends a new member to the end of this object, with the specified name and
-   * the JSON
+   * Appends a new member to the end of this object, with the specified name and the JSON
    * representation of the specified string.
-   * <p>
-   * This method <strong>does not prevent duplicate names</strong>. Calling this
-   * method with a name
-   * that already exists in the object will append another member with the same
-   * name. In order to
-   * replace existing members, use the method <code>set(name, value)</code>
-   * instead. However,
-   * <strong> <em>add</em> is much faster than <em>set</em></strong> (because it
-   * does not need to
-   * search for existing members). Therefore <em>add</em> should be preferred
-   * when constructing new
-   * objects.
-   * </p>
    *
-   * @param name
-   *          the name of the member to add
-   * @param value
-   *          the value of the member to add
+   * <p>This method <strong>does not prevent duplicate names</strong>. Calling this method with a
+   * name that already exists in the object will append another member with the same name. In order
+   * to replace existing members, use the method <code>set(name, value)</code> instead. However,
+   * <strong> <em>add</em> is much faster than <em>set</em></strong> (because it does not need to
+   * search for existing members). Therefore <em>add</em> should be preferred when constructing new
+   * objects.
+   *
+   * @param name the name of the member to add
+   * @param value the value of the member to add
    * @return the object itself, to enable method chaining
    */
   public JsonObject add(String name, String value) {
@@ -339,27 +247,18 @@ public class JsonObject extends JsonValue implements Iterable<Member> {
   }
 
   /**
-   * Appends a new member to the end of this object, with the specified name and
-   * the specified JSON
+   * Appends a new member to the end of this object, with the specified name and the specified JSON
    * value.
-   * <p>
-   * This method <strong>does not prevent duplicate names</strong>. Calling this
-   * method with a name
-   * that already exists in the object will append another member with the same
-   * name. In order to
-   * replace existing members, use the method <code>set(name, value)</code>
-   * instead. However,
-   * <strong> <em>add</em> is much faster than <em>set</em></strong> (because it
-   * does not need to
-   * search for existing members). Therefore <em>add</em> should be preferred
-   * when constructing new
-   * objects.
-   * </p>
    *
-   * @param name
-   *          the name of the member to add
-   * @param value
-   *          the value of the member to add, must not be <code>null</code>
+   * <p>This method <strong>does not prevent duplicate names</strong>. Calling this method with a
+   * name that already exists in the object will append another member with the same name. In order
+   * to replace existing members, use the method <code>set(name, value)</code> instead. However,
+   * <strong> <em>add</em> is much faster than <em>set</em></strong> (because it does not need to
+   * search for existing members). Therefore <em>add</em> should be preferred when constructing new
+   * objects.
+   *
+   * @param name the name of the member to add
+   * @param value the value of the member to add, must not be <code>null</code>
    * @return the object itself, to enable method chaining
    */
   public JsonObject add(String name, JsonValue value) {
@@ -376,25 +275,17 @@ public class JsonObject extends JsonValue implements Iterable<Member> {
   }
 
   /**
-   * Sets the value of the member with the specified name to the JSON
-   * representation of the
-   * specified <code>int</code> value. If this object does not contain a member
-   * with this name, a
-   * new member is added at the end of the object. If this object contains
-   * multiple members with
+   * Sets the value of the member with the specified name to the JSON representation of the
+   * specified <code>int</code> value. If this object does not contain a member with this name, a
+   * new member is added at the end of the object. If this object contains multiple members with
    * this name, only the last one is changed.
-   * <p>
-   * This method should <strong>only be used to modify existing
-   * objects</strong>. To fill a new
-   * object with members, the method <code>add(name, value)</code> should be
-   * preferred which is much
-   * faster (as it does not need to search for existing members).
-   * </p>
    *
-   * @param name
-   *          the name of the member to replace
-   * @param value
-   *          the value to set to the member
+   * <p>This method should <strong>only be used to modify existing objects</strong>. To fill a new
+   * object with members, the method <code>add(name, value)</code> should be preferred which is much
+   * faster (as it does not need to search for existing members).
+   *
+   * @param name the name of the member to replace
+   * @param value the value to set to the member
    * @return the object itself, to enable method chaining
    */
   public JsonObject set(String name, int value) {
@@ -403,25 +294,17 @@ public class JsonObject extends JsonValue implements Iterable<Member> {
   }
 
   /**
-   * Sets the value of the member with the specified name to the JSON
-   * representation of the
-   * specified <code>long</code> value. If this object does not contain a member
-   * with this name, a
-   * new member is added at the end of the object. If this object contains
-   * multiple members with
+   * Sets the value of the member with the specified name to the JSON representation of the
+   * specified <code>long</code> value. If this object does not contain a member with this name, a
+   * new member is added at the end of the object. If this object contains multiple members with
    * this name, only the last one is changed.
-   * <p>
-   * This method should <strong>only be used to modify existing
-   * objects</strong>. To fill a new
-   * object with members, the method <code>add(name, value)</code> should be
-   * preferred which is much
-   * faster (as it does not need to search for existing members).
-   * </p>
    *
-   * @param name
-   *          the name of the member to replace
-   * @param value
-   *          the value to set to the member
+   * <p>This method should <strong>only be used to modify existing objects</strong>. To fill a new
+   * object with members, the method <code>add(name, value)</code> should be preferred which is much
+   * faster (as it does not need to search for existing members).
+   *
+   * @param name the name of the member to replace
+   * @param value the value to set to the member
    * @return the object itself, to enable method chaining
    */
   public JsonObject set(String name, long value) {
@@ -430,25 +313,17 @@ public class JsonObject extends JsonValue implements Iterable<Member> {
   }
 
   /**
-   * Sets the value of the member with the specified name to the JSON
-   * representation of the
-   * specified <code>float</code> value. If this object does not contain a
-   * member with this name, a
-   * new member is added at the end of the object. If this object contains
-   * multiple members with
+   * Sets the value of the member with the specified name to the JSON representation of the
+   * specified <code>float</code> value. If this object does not contain a member with this name, a
+   * new member is added at the end of the object. If this object contains multiple members with
    * this name, only the last one is changed.
-   * <p>
-   * This method should <strong>only be used to modify existing
-   * objects</strong>. To fill a new
-   * object with members, the method <code>add(name, value)</code> should be
-   * preferred which is much
-   * faster (as it does not need to search for existing members).
-   * </p>
    *
-   * @param name
-   *          the name of the member to add
-   * @param value
-   *          the value of the member to add
+   * <p>This method should <strong>only be used to modify existing objects</strong>. To fill a new
+   * object with members, the method <code>add(name, value)</code> should be preferred which is much
+   * faster (as it does not need to search for existing members).
+   *
+   * @param name the name of the member to add
+   * @param value the value of the member to add
    * @return the object itself, to enable method chaining
    */
   public JsonObject set(String name, float value) {
@@ -457,25 +332,17 @@ public class JsonObject extends JsonValue implements Iterable<Member> {
   }
 
   /**
-   * Sets the value of the member with the specified name to the JSON
-   * representation of the
-   * specified <code>double</code> value. If this object does not contain a
-   * member with this name, a
-   * new member is added at the end of the object. If this object contains
-   * multiple members with
+   * Sets the value of the member with the specified name to the JSON representation of the
+   * specified <code>double</code> value. If this object does not contain a member with this name, a
+   * new member is added at the end of the object. If this object contains multiple members with
    * this name, only the last one is changed.
-   * <p>
-   * This method should <strong>only be used to modify existing
-   * objects</strong>. To fill a new
-   * object with members, the method <code>add(name, value)</code> should be
-   * preferred which is much
-   * faster (as it does not need to search for existing members).
-   * </p>
    *
-   * @param name
-   *          the name of the member to add
-   * @param value
-   *          the value of the member to add
+   * <p>This method should <strong>only be used to modify existing objects</strong>. To fill a new
+   * object with members, the method <code>add(name, value)</code> should be preferred which is much
+   * faster (as it does not need to search for existing members).
+   *
+   * @param name the name of the member to add
+   * @param value the value of the member to add
    * @return the object itself, to enable method chaining
    */
   public JsonObject set(String name, double value) {
@@ -484,25 +351,17 @@ public class JsonObject extends JsonValue implements Iterable<Member> {
   }
 
   /**
-   * Sets the value of the member with the specified name to the JSON
-   * representation of the
-   * specified <code>boolean</code> value. If this object does not contain a
-   * member with this name,
-   * a new member is added at the end of the object. If this object contains
-   * multiple members with
+   * Sets the value of the member with the specified name to the JSON representation of the
+   * specified <code>boolean</code> value. If this object does not contain a member with this name,
+   * a new member is added at the end of the object. If this object contains multiple members with
    * this name, only the last one is changed.
-   * <p>
-   * This method should <strong>only be used to modify existing
-   * objects</strong>. To fill a new
-   * object with members, the method <code>add(name, value)</code> should be
-   * preferred which is much
-   * faster (as it does not need to search for existing members).
-   * </p>
    *
-   * @param name
-   *          the name of the member to add
-   * @param value
-   *          the value of the member to add
+   * <p>This method should <strong>only be used to modify existing objects</strong>. To fill a new
+   * object with members, the method <code>add(name, value)</code> should be preferred which is much
+   * faster (as it does not need to search for existing members).
+   *
+   * @param name the name of the member to add
+   * @param value the value of the member to add
    * @return the object itself, to enable method chaining
    */
   public JsonObject set(String name, boolean value) {
@@ -511,25 +370,17 @@ public class JsonObject extends JsonValue implements Iterable<Member> {
   }
 
   /**
-   * Sets the value of the member with the specified name to the JSON
-   * representation of the
-   * specified string. If this object does not contain a member with this name,
-   * a new member is
-   * added at the end of the object. If this object contains multiple members
-   * with this name, only
+   * Sets the value of the member with the specified name to the JSON representation of the
+   * specified string. If this object does not contain a member with this name, a new member is
+   * added at the end of the object. If this object contains multiple members with this name, only
    * the last one is changed.
-   * <p>
-   * This method should <strong>only be used to modify existing
-   * objects</strong>. To fill a new
-   * object with members, the method <code>add(name, value)</code> should be
-   * preferred which is much
-   * faster (as it does not need to search for existing members).
-   * </p>
    *
-   * @param name
-   *          the name of the member to add
-   * @param value
-   *          the value of the member to add
+   * <p>This method should <strong>only be used to modify existing objects</strong>. To fill a new
+   * object with members, the method <code>add(name, value)</code> should be preferred which is much
+   * faster (as it does not need to search for existing members).
+   *
+   * @param name the name of the member to add
+   * @param value the value of the member to add
    * @return the object itself, to enable method chaining
    */
   public JsonObject set(String name, String value) {
@@ -538,24 +389,16 @@ public class JsonObject extends JsonValue implements Iterable<Member> {
   }
 
   /**
-   * Sets the value of the member with the specified name to the specified JSON
-   * value. If this
-   * object does not contain a member with this name, a new member is added at
-   * the end of the
-   * object. If this object contains multiple members with this name, only the
-   * last one is changed.
-   * <p>
-   * This method should <strong>only be used to modify existing
-   * objects</strong>. To fill a new
-   * object with members, the method <code>add(name, value)</code> should be
-   * preferred which is much
-   * faster (as it does not need to search for existing members).
-   * </p>
+   * Sets the value of the member with the specified name to the specified JSON value. If this
+   * object does not contain a member with this name, a new member is added at the end of the
+   * object. If this object contains multiple members with this name, only the last one is changed.
    *
-   * @param name
-   *          the name of the member to add
-   * @param value
-   *          the value of the member to add, must not be <code>null</code>
+   * <p>This method should <strong>only be used to modify existing objects</strong>. To fill a new
+   * object with members, the method <code>add(name, value)</code> should be preferred which is much
+   * faster (as it does not need to search for existing members).
+   *
+   * @param name the name of the member to add
+   * @param value the value of the member to add, must not be <code>null</code>
    * @return the object itself, to enable method chaining
    */
   public JsonObject set(String name, JsonValue value) {
@@ -577,14 +420,11 @@ public class JsonObject extends JsonValue implements Iterable<Member> {
   }
 
   /**
-   * Removes a member with the specified name from this object. If this object
-   * contains multiple
-   * members with the given name, only the last one is removed. If this object
-   * does not contain a
+   * Removes a member with the specified name from this object. If this object contains multiple
+   * members with the given name, only the last one is removed. If this object does not contain a
    * member with the specified name, the object is not modified.
    *
-   * @param name
-   *          the name of the member to remove
+   * @param name the name of the member to remove
    * @return the object itself, to enable method chaining
    */
   public JsonObject remove(String name) {
@@ -601,14 +441,11 @@ public class JsonObject extends JsonValue implements Iterable<Member> {
   }
 
   /**
-   * Copies all members of the specified object into this object. When the
-   * specified object contains
-   * members with names that also exist in this object, the existing values in
-   * this object will be
+   * Copies all members of the specified object into this object. When the specified object contains
+   * members with names that also exist in this object, the existing values in this object will be
    * replaced by the corresponding values in the specified object.
    *
-   * @param object
-   *          the object to merge
+   * @param object the object to merge
    * @return the object itself, to enable method chaining
    */
   public JsonObject merge(JsonObject object) {
@@ -622,15 +459,12 @@ public class JsonObject extends JsonValue implements Iterable<Member> {
   }
 
   /**
-   * Returns the value of the member with the specified name in this object. If
-   * this object contains
+   * Returns the value of the member with the specified name in this object. If this object contains
    * multiple members with the given name, this method will return the last one.
    *
-   * @param name
-   *          the name of the member whose value is to be returned
-   * @return the value of the last member with the specified name, or
-   * <code>null</code> if this
-   *         object does not contain a member with that name
+   * @param name the name of the member whose value is to be returned
+   * @return the value of the last member with the specified name, or <code>null</code> if this
+   *     object does not contain a member with that name
    */
   public JsonValue get(String name) {
     if (name == null) {
@@ -641,23 +475,16 @@ public class JsonObject extends JsonValue implements Iterable<Member> {
   }
 
   /**
-   * Returns the <code>int</code> value of the member with the specified name in
-   * this object. If
-   * this object does not contain a member with this name, the given default
-   * value is returned. If
-   * this object contains multiple members with the given name, the last one
-   * will be picked. If this
-   * member's value does not represent a JSON number or if it cannot be
-   * interpreted as Java
-   * <code>int</code>, an exception is thrown.
+   * Returns the <code>int</code> value of the member with the specified name in this object. If
+   * this object does not contain a member with this name, the given default value is returned. If
+   * this object contains multiple members with the given name, the last one will be picked. If this
+   * member's value does not represent a JSON number or if it cannot be interpreted as Java <code>
+   * int</code>, an exception is thrown.
    *
-   * @param name
-   *          the name of the member whose value is to be returned
-   * @param defaultValue
-   *          the value to be returned if the requested member is missing
-   * @return the value of the last member with the specified name, or the given
-   * default value if
-   *         this object does not contain a member with that name
+   * @param name the name of the member whose value is to be returned
+   * @param defaultValue the value to be returned if the requested member is missing
+   * @return the value of the last member with the specified name, or the given default value if
+   *     this object does not contain a member with that name
    */
   public int getInt(String name, int defaultValue) {
     JsonValue value = get(name);
@@ -665,23 +492,16 @@ public class JsonObject extends JsonValue implements Iterable<Member> {
   }
 
   /**
-   * Returns the <code>long</code> value of the member with the specified name
-   * in this object. If
-   * this object does not contain a member with this name, the given default
-   * value is returned. If
-   * this object contains multiple members with the given name, the last one
-   * will be picked. If this
-   * member's value does not represent a JSON number or if it cannot be
-   * interpreted as Java
-   * <code>long</code>, an exception is thrown.
+   * Returns the <code>long</code> value of the member with the specified name in this object. If
+   * this object does not contain a member with this name, the given default value is returned. If
+   * this object contains multiple members with the given name, the last one will be picked. If this
+   * member's value does not represent a JSON number or if it cannot be interpreted as Java <code>
+   * long</code>, an exception is thrown.
    *
-   * @param name
-   *          the name of the member whose value is to be returned
-   * @param defaultValue
-   *          the value to be returned if the requested member is missing
-   * @return the value of the last member with the specified name, or the given
-   * default value if
-   *         this object does not contain a member with that name
+   * @param name the name of the member whose value is to be returned
+   * @param defaultValue the value to be returned if the requested member is missing
+   * @return the value of the last member with the specified name, or the given default value if
+   *     this object does not contain a member with that name
    */
   public long getLong(String name, long defaultValue) {
     JsonValue value = get(name);
@@ -689,23 +509,16 @@ public class JsonObject extends JsonValue implements Iterable<Member> {
   }
 
   /**
-   * Returns the <code>float</code> value of the member with the specified name
-   * in this object. If
-   * this object does not contain a member with this name, the given default
-   * value is returned. If
-   * this object contains multiple members with the given name, the last one
-   * will be picked. If this
-   * member's value does not represent a JSON number or if it cannot be
-   * interpreted as Java
-   * <code>float</code>, an exception is thrown.
+   * Returns the <code>float</code> value of the member with the specified name in this object. If
+   * this object does not contain a member with this name, the given default value is returned. If
+   * this object contains multiple members with the given name, the last one will be picked. If this
+   * member's value does not represent a JSON number or if it cannot be interpreted as Java <code>
+   * float</code>, an exception is thrown.
    *
-   * @param name
-   *          the name of the member whose value is to be returned
-   * @param defaultValue
-   *          the value to be returned if the requested member is missing
-   * @return the value of the last member with the specified name, or the given
-   * default value if
-   *         this object does not contain a member with that name
+   * @param name the name of the member whose value is to be returned
+   * @param defaultValue the value to be returned if the requested member is missing
+   * @return the value of the last member with the specified name, or the given default value if
+   *     this object does not contain a member with that name
    */
   public float getFloat(String name, float defaultValue) {
     JsonValue value = get(name);
@@ -713,23 +526,16 @@ public class JsonObject extends JsonValue implements Iterable<Member> {
   }
 
   /**
-   * Returns the <code>double</code> value of the member with the specified name
-   * in this object. If
-   * this object does not contain a member with this name, the given default
-   * value is returned. If
-   * this object contains multiple members with the given name, the last one
-   * will be picked. If this
-   * member's value does not represent a JSON number or if it cannot be
-   * interpreted as Java
-   * <code>double</code>, an exception is thrown.
+   * Returns the <code>double</code> value of the member with the specified name in this object. If
+   * this object does not contain a member with this name, the given default value is returned. If
+   * this object contains multiple members with the given name, the last one will be picked. If this
+   * member's value does not represent a JSON number or if it cannot be interpreted as Java <code>
+   * double</code>, an exception is thrown.
    *
-   * @param name
-   *          the name of the member whose value is to be returned
-   * @param defaultValue
-   *          the value to be returned if the requested member is missing
-   * @return the value of the last member with the specified name, or the given
-   * default value if
-   *         this object does not contain a member with that name
+   * @param name the name of the member whose value is to be returned
+   * @param defaultValue the value to be returned if the requested member is missing
+   * @return the value of the last member with the specified name, or the given default value if
+   *     this object does not contain a member with that name
    */
   public double getDouble(String name, double defaultValue) {
     JsonValue value = get(name);
@@ -737,23 +543,16 @@ public class JsonObject extends JsonValue implements Iterable<Member> {
   }
 
   /**
-   * Returns the <code>boolean</code> value of the member with the specified
-   * name in this object. If
-   * this object does not contain a member with this name, the given default
-   * value is returned. If
-   * this object contains multiple members with the given name, the last one
-   * will be picked. If this
-   * member's value does not represent a JSON <code>true</code> or
-   * <code>false</code> value, an
+   * Returns the <code>boolean</code> value of the member with the specified name in this object. If
+   * this object does not contain a member with this name, the given default value is returned. If
+   * this object contains multiple members with the given name, the last one will be picked. If this
+   * member's value does not represent a JSON <code>true</code> or <code>false</code> value, an
    * exception is thrown.
    *
-   * @param name
-   *          the name of the member whose value is to be returned
-   * @param defaultValue
-   *          the value to be returned if the requested member is missing
-   * @return the value of the last member with the specified name, or the given
-   * default value if
-   *         this object does not contain a member with that name
+   * @param name the name of the member whose value is to be returned
+   * @param defaultValue the value to be returned if the requested member is missing
+   * @return the value of the last member with the specified name, or the given default value if
+   *     this object does not contain a member with that name
    */
   public boolean getBoolean(String name, boolean defaultValue) {
     JsonValue value = get(name);
@@ -761,21 +560,15 @@ public class JsonObject extends JsonValue implements Iterable<Member> {
   }
 
   /**
-   * Returns the <code>String</code> value of the member with the specified name
-   * in this object. If
-   * this object does not contain a member with this name, the given default
-   * value is returned. If
-   * this object contains multiple members with the given name, the last one is
-   * picked. If this
+   * Returns the <code>String</code> value of the member with the specified name in this object. If
+   * this object does not contain a member with this name, the given default value is returned. If
+   * this object contains multiple members with the given name, the last one is picked. If this
    * member's value does not represent a JSON string, an exception is thrown.
    *
-   * @param name
-   *          the name of the member whose value is to be returned
-   * @param defaultValue
-   *          the value to be returned if the requested member is missing
-   * @return the value of the last member with the specified name, or the given
-   * default value if
-   *         this object does not contain a member with that name
+   * @param name the name of the member whose value is to be returned
+   * @param defaultValue the value to be returned if the requested member is missing
+   * @return the value of the last member with the specified name, or the given default value if
+   *     this object does not contain a member with that name
    */
   public String getString(String name, String defaultValue) {
     JsonValue value = get(name);
@@ -787,29 +580,32 @@ public class JsonObject extends JsonValue implements Iterable<Member> {
    *
    * @return the number of members in this object
    */
-  public int size() { return names.size(); }
+  public int size() {
+    return names.size();
+  }
 
   /**
    * Returns <code>true</code> if this object contains no members.
    *
    * @return <code>true</code> if this object contains no members
    */
-  public boolean isEmpty() { return names.isEmpty(); }
+  public boolean isEmpty() {
+    return names.isEmpty();
+  }
 
   /**
-   * Returns a list of the names in this object in document order. The returned
-   * list is backed by
-   * this object and will reflect subsequent changes. It cannot be used to
-   * modify this object.
+   * Returns a list of the names in this object in document order. The returned list is backed by
+   * this object and will reflect subsequent changes. It cannot be used to modify this object.
    * Attempts to modify the returned list will result in an exception.
    *
    * @return a list of the names in this object
    */
-  public List<String> names() { return Collections.unmodifiableList(names); }
+  public List<String> names() {
+    return Collections.unmodifiableList(names);
+  }
 
   /**
-   * Returns an iterator over the members of this object in document order. The
-   * returned iterator
+   * Returns an iterator over the members of this object in document order. The returned iterator
    * cannot be used to modify this object.
    *
    * @return an iterator over the members of this object
@@ -818,7 +614,9 @@ public class JsonObject extends JsonValue implements Iterable<Member> {
     final Iterator<String> namesIterator = names.iterator();
     final Iterator<JsonValue> valuesIterator = values.iterator();
     return new Iterator<Member>() {
-      public boolean hasNext() { return namesIterator.hasNext(); }
+      public boolean hasNext() {
+        return namesIterator.hasNext();
+      }
 
       public Member next() {
         String name = namesIterator.next();
@@ -826,7 +624,9 @@ public class JsonObject extends JsonValue implements Iterable<Member> {
         return new Member(name, value);
       }
 
-      public void remove() { throw new UnsupportedOperationException(); }
+      public void remove() {
+        throw new UnsupportedOperationException();
+      }
     };
   }
 
@@ -878,7 +678,7 @@ public class JsonObject extends JsonValue implements Iterable<Member> {
     if (getClass() != obj.getClass()) {
       return false;
     }
-    JsonObject other = (JsonObject)obj;
+    JsonObject other = (JsonObject) obj;
     return names.equals(other.names) && values.equals(other.values);
   }
 
@@ -917,7 +717,7 @@ public class JsonObject extends JsonValue implements Iterable<Member> {
       int slot = hashSlotFor(name);
       if (index < 0xff) {
         // increment by 1, 0 stands for empty
-        hashTable[slot] = (byte)(index + 1);
+        hashTable[slot] = (byte) (index + 1);
       } else {
         hashTable[slot] = 0;
       }

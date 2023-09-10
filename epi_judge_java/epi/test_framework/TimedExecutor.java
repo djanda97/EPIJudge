@@ -1,4 +1,3 @@
-
 package epi.test_framework;
 
 import java.util.concurrent.Callable;
@@ -18,15 +17,12 @@ public class TimedExecutor {
   }
 
   /**
-   * Invokes func with a specified timeoutSeconds.
-   * If func takes more than timeoutSeconds seconds to run,
-   * TimeoutException is thrown.
-   * If timeoutSeconds == 0, it simply calls the function.
+   * Invokes func with a specified timeoutSeconds. If func takes more than timeoutSeconds seconds to
+   * run, TimeoutException is thrown. If timeoutSeconds == 0, it simply calls the function.
    *
    * @return whatever func returns
    */
-  public <ReturnType> ReturnType run(Callable<ReturnType> func)
-      throws Exception {
+  public <ReturnType> ReturnType run(Callable<ReturnType> func) throws Exception {
     if (timeoutSeconds == 0) {
       // Timeout is disabled.
       return timedCall(func);
@@ -34,7 +30,10 @@ public class TimedExecutor {
       try {
         final ExecutorService executor = Executors.newSingleThreadExecutor();
         final Future<ReturnType> future =
-            executor.submit(() -> { return timedCall(func); });
+            executor.submit(
+                () -> {
+                  return timedCall(func);
+                });
 
         // This does not cancel the already-scheduled task.
         executor.shutdown();
@@ -48,7 +47,7 @@ public class TimedExecutor {
       } catch (ExecutionException e) {
         Throwable cause = e.getCause();
         if (cause instanceof Exception) {
-          throw(Exception) e.getCause();
+          throw (Exception) e.getCause();
         } else {
           throw new Exception(cause);
         }
@@ -56,8 +55,7 @@ public class TimedExecutor {
     }
   }
 
-  private <ReturnType> ReturnType timedCall(Callable<ReturnType> func)
-      throws Exception {
+  private <ReturnType> ReturnType timedCall(Callable<ReturnType> func) throws Exception {
     timer.start();
     ReturnType result = func.call();
     timer.stop();
@@ -65,17 +63,18 @@ public class TimedExecutor {
   }
 
   /**
-   * Invokes func with a specified timeoutSeconds.
-   * If func takes more than timeoutSeconds seconds to run,
-   * TimeoutException is thrown.
-   * If timeoutSeconds == 0, it simply calls the function.
+   * Invokes func with a specified timeoutSeconds. If func takes more than timeoutSeconds seconds to
+   * run, TimeoutException is thrown. If timeoutSeconds == 0, it simply calls the function.
    */
   public void run(Runnable func) throws Exception {
-    run(() -> {
-      func.run();
-      return null;
-    });
+    run(
+        () -> {
+          func.run();
+          return null;
+        });
   }
 
-  public TestTimer getTimer() { return timer; }
+  public TestTimer getTimer() {
+    return timer;
+  }
 }

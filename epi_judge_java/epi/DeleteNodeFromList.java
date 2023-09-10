@@ -1,7 +1,9 @@
 package epi;
+
 import epi.test_framework.EpiTest;
 import epi.test_framework.GenericTest;
 import epi.test_framework.TimedExecutor;
+
 public class DeleteNodeFromList {
 
   // Assumes nodeToDelete is not tail.
@@ -9,17 +11,14 @@ public class DeleteNodeFromList {
     // TODO - you fill in here.
     return;
   }
+
   @EpiTest(testDataFile = "delete_node_from_list.tsv")
-  public static ListNode<Integer> deleteListWrapper(TimedExecutor executor,
-                                                    ListNode<Integer> head,
-                                                    int nodeToDeleteIdx)
-      throws Exception {
+  public static ListNode<Integer> deleteListWrapper(
+      TimedExecutor executor, ListNode<Integer> head, int nodeToDeleteIdx) throws Exception {
     ListNode<Integer> nodeToDelete = head;
-    if (nodeToDelete == null)
-      throw new RuntimeException("List is empty");
+    if (nodeToDelete == null) throw new RuntimeException("List is empty");
     while (nodeToDeleteIdx-- > 0) {
-      if (nodeToDelete.next == null)
-        throw new RuntimeException("Can't delete last node");
+      if (nodeToDelete.next == null) throw new RuntimeException("Can't delete last node");
       nodeToDelete = nodeToDelete.next;
     }
 
@@ -31,9 +30,8 @@ public class DeleteNodeFromList {
 
   public static void main(String[] args) {
     System.exit(
-        GenericTest
-            .runFromAnnotations(args, "DeleteNodeFromList.java",
-                                new Object() {}.getClass().getEnclosingClass())
+        GenericTest.runFromAnnotations(
+                args, "DeleteNodeFromList.java", new Object() {}.getClass().getEnclosingClass())
             .ordinal());
   }
 }

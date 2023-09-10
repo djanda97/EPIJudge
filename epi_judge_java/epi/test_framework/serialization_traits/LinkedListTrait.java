@@ -1,4 +1,3 @@
-
 package epi.test_framework.serialization_traits;
 
 import epi.ListNode;
@@ -41,7 +40,7 @@ public class LinkedListTrait extends SerializationTrait {
     if (x == null) {
       return Collections.singletonList(0);
     } else if (x instanceof ListNode) {
-      return Collections.singletonList(((ListNode)x).size());
+      return Collections.singletonList(((ListNode) x).size());
     }
     throw new RuntimeException("Expected ListNode");
   }

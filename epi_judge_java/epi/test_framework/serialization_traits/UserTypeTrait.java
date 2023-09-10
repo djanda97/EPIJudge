@@ -1,4 +1,3 @@
-
 package epi.test_framework.serialization_traits;
 
 import epi.test_framework.EpiUserType;
@@ -19,16 +18,18 @@ public class UserTypeTrait extends SerializationTrait {
 
   public UserTypeTrait(Class<?> userType, EpiUserType userTypeInfo) {
     this.typeInfo = userTypeInfo;
-    ctorParamTraits = Arrays.stream(userTypeInfo.ctorParams())
-                          .map(TraitsFactory::getTrait)
-                          .collect(Collectors.toList());
+    ctorParamTraits =
+        Arrays.stream(userTypeInfo.ctorParams())
+            .map(TraitsFactory::getTrait)
+            .collect(Collectors.toList());
 
     try {
       ctor = userType.getDeclaredConstructor(userTypeInfo.ctorParams());
     } catch (NoSuchMethodException e) {
-      throw new RuntimeException(String.format(
-          "%s does not have a constructor with signature %s",
-          userType.getTypeName(), Arrays.toString(userTypeInfo.ctorParams())));
+      throw new RuntimeException(
+          String.format(
+              "%s does not have a constructor with signature %s",
+              userType.getTypeName(), Arrays.toString(userTypeInfo.ctorParams())));
     }
   }
 
@@ -55,8 +56,8 @@ public class UserTypeTrait extends SerializationTrait {
     JsonArray a = jsonObject.asArray();
     if (a.size() != ctorParamTraits.size()) {
       throw new RuntimeException(
-          String.format("Tuple parser: expected %d values, provided %d",
-                        ctorParamTraits.size(), a.size()));
+          String.format(
+              "Tuple parser: expected %d values, provided %d", ctorParamTraits.size(), a.size()));
     }
     Object[] params = new Object[ctorParamTraits.size()];
     for (int i = 0; i < ctorParamTraits.size(); i++) {
@@ -64,8 +65,7 @@ public class UserTypeTrait extends SerializationTrait {
     }
     try {
       return ctor.newInstance(params);
-    } catch (InstantiationException | IllegalAccessException |
-             InvocationTargetException e) {
+    } catch (InstantiationException | IllegalAccessException | InvocationTargetException e) {
       throw new RuntimeException("Tuple parser: " + e.getMessage());
     }
   }

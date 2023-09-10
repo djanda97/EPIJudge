@@ -1,8 +1,10 @@
 package epi;
+
 import epi.test_framework.EpiTest;
 import epi.test_framework.GenericTest;
 
 import java.util.List;
+
 public class KthLargestInArray {
   // The numbering starts from one, i.e., if A = [3,1,-1,2] then
   // findKthLargest(1, A) returns 3, findKthLargest(2, A) returns 2,
@@ -15,9 +17,8 @@ public class KthLargestInArray {
 
   public static void main(String[] args) {
     System.exit(
-        GenericTest
-            .runFromAnnotations(args, "KthLargestInArray.java",
-                                new Object() {}.getClass().getEnclosingClass())
+        GenericTest.runFromAnnotations(
+                args, "KthLargestInArray.java", new Object() {}.getClass().getEnclosingClass())
             .ordinal());
   }
 }

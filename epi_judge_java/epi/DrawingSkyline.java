@@ -1,12 +1,13 @@
 package epi;
+
 import epi.test_framework.EpiTest;
 import epi.test_framework.EpiUserType;
 import epi.test_framework.GenericTest;
 
 import java.util.List;
+
 public class DrawingSkyline {
   @EpiUserType(ctorParams = {int.class, int.class, int.class})
-
   public static class Rect {
     public int left, right, height;
 
@@ -25,7 +26,7 @@ public class DrawingSkyline {
         return false;
       }
 
-      Rect rectangle = (Rect)o;
+      Rect rectangle = (Rect) o;
 
       if (left != rectangle.left) {
         return false;
@@ -43,7 +44,6 @@ public class DrawingSkyline {
   }
 
   @EpiTest(testDataFile = "drawing_skyline.tsv")
-
   public static List<Rect> drawingSkylines(List<Rect> buildings) {
     // TODO - you fill in here.
     return null;
@@ -51,9 +51,8 @@ public class DrawingSkyline {
 
   public static void main(String[] args) {
     System.exit(
-        GenericTest
-            .runFromAnnotations(args, "DrawingSkyline.java",
-                                new Object() {}.getClass().getEnclosingClass())
+        GenericTest.runFromAnnotations(
+                args, "DrawingSkyline.java", new Object() {}.getClass().getEnclosingClass())
             .ordinal());
   }
 }

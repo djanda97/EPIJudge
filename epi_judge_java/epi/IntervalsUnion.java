@@ -1,4 +1,5 @@
 package epi;
+
 import epi.test_framework.EpiTest;
 import epi.test_framework.EpiUserType;
 import epi.test_framework.GenericTest;
@@ -7,6 +8,7 @@ import epi.test_framework.TimedExecutor;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
 public class IntervalsUnion {
 
   public static class Interval {
@@ -23,16 +25,15 @@ public class IntervalsUnion {
     // TODO - you fill in here.
     return Collections.emptyList();
   }
-  @EpiUserType(
-      ctorParams = {int.class, boolean.class, int.class, boolean.class})
+
+  @EpiUserType(ctorParams = {int.class, boolean.class, int.class, boolean.class})
   public static class FlatInterval {
     int leftVal;
     boolean leftIsClosed;
     int rightVal;
     boolean rightIsClosed;
 
-    public FlatInterval(int leftVal, boolean leftIsClosed, int rightVal,
-                        boolean rightIsClosed) {
+    public FlatInterval(int leftVal, boolean leftIsClosed, int rightVal, boolean rightIsClosed) {
       this.leftVal = leftVal;
       this.leftIsClosed = leftIsClosed;
       this.rightVal = rightVal;
@@ -66,7 +67,7 @@ public class IntervalsUnion {
         return false;
       }
 
-      FlatInterval that = (FlatInterval)o;
+      FlatInterval that = (FlatInterval) o;
 
       if (leftVal != that.leftVal) {
         return false;
@@ -91,15 +92,18 @@ public class IntervalsUnion {
 
     @Override
     public String toString() {
-      return "" + (leftIsClosed ? "<" : "(") + leftVal + ", " + rightVal +
-          (rightIsClosed ? ">" : ")");
+      return ""
+          + (leftIsClosed ? "<" : "(")
+          + leftVal
+          + ", "
+          + rightVal
+          + (rightIsClosed ? ">" : ")");
     }
   }
 
   @EpiTest(testDataFile = "intervals_union.tsv")
-  public static List<FlatInterval>
-  unionIntervalWrapper(TimedExecutor executor, List<FlatInterval> intervals)
-      throws Exception {
+  public static List<FlatInterval> unionIntervalWrapper(
+      TimedExecutor executor, List<FlatInterval> intervals) throws Exception {
     List<Interval> casted = new ArrayList<>(intervals.size());
     for (FlatInterval in : intervals) {
       casted.add(in.toInterval());
@@ -116,9 +120,8 @@ public class IntervalsUnion {
 
   public static void main(String[] args) {
     System.exit(
-        GenericTest
-            .runFromAnnotations(args, "IntervalsUnion.java",
-                                new Object() {}.getClass().getEnclosingClass())
+        GenericTest.runFromAnnotations(
+                args, "IntervalsUnion.java", new Object() {}.getClass().getEnclosingClass())
             .ordinal());
   }
 }

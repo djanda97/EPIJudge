@@ -1,4 +1,3 @@
-
 package epi.test_framework.serialization_traits;
 
 import epi.test_framework.minimal_json.JsonValue;
@@ -25,7 +24,7 @@ public class IntegerTrait extends SerializationTrait {
   @Override
   public List<Integer> getMetrics(Object x) {
     if (x instanceof Integer) {
-      return Collections.singletonList(Math.abs((int)x));
+      return Collections.singletonList(Math.abs((int) x));
     }
     throw new RuntimeException("Expected Integer");
   }

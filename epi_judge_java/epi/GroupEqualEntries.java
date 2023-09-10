@@ -1,4 +1,5 @@
 package epi;
+
 import epi.test_framework.EpiTest;
 import epi.test_framework.EpiUserType;
 import epi.test_framework.GenericTest;
@@ -10,9 +11,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
 public class GroupEqualEntries {
   @EpiUserType(ctorParams = {Integer.class, String.class})
-
   public static class Person {
     public Integer age;
     public String name;
@@ -24,15 +25,12 @@ public class GroupEqualEntries {
 
     @Override
     public boolean equals(Object o) {
-      if (this == o)
-        return true;
-      if (o == null || getClass() != o.getClass())
-        return false;
+      if (this == o) return true;
+      if (o == null || getClass() != o.getClass()) return false;
 
-      Person person = (Person)o;
+      Person person = (Person) o;
 
-      if (!age.equals(person.age))
-        return false;
+      if (!age.equals(person.age)) return false;
       return name.equals(person.name);
     }
 
@@ -43,10 +41,12 @@ public class GroupEqualEntries {
       return result;
     }
   }
+
   public static void groupByAge(List<Person> people) {
     // TODO - you fill in here.
     return;
   }
+
   private static Map<Person, Integer> buildMultiset(List<Person> people) {
     Map<Person, Integer> m = new HashMap<>();
     for (Person p : people) {
@@ -56,8 +56,8 @@ public class GroupEqualEntries {
   }
 
   @EpiTest(testDataFile = "group_equal_entries.tsv")
-  public static void groupByAgeWrapper(TimedExecutor executor,
-                                       List<Person> people) throws Exception {
+  public static void groupByAgeWrapper(TimedExecutor executor, List<Person> people)
+      throws Exception {
     if (people.isEmpty()) {
       return;
     }
@@ -85,9 +85,8 @@ public class GroupEqualEntries {
 
   public static void main(String[] args) {
     System.exit(
-        GenericTest
-            .runFromAnnotations(args, "GroupEqualEntries.java",
-                                new Object() {}.getClass().getEnclosingClass())
+        GenericTest.runFromAnnotations(
+                args, "GroupEqualEntries.java", new Object() {}.getClass().getEnclosingClass())
             .ordinal());
   }
 }

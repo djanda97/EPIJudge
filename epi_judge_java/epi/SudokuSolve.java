@@ -1,4 +1,5 @@
 package epi;
+
 import epi.test_framework.EpiTest;
 import epi.test_framework.GenericTest;
 import epi.test_framework.TestFailure;
@@ -9,15 +10,16 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
+
 public class SudokuSolve {
   public static boolean solveSudoku(List<List<Integer>> partialAssignment) {
     // TODO - you fill in here.
     return true;
   }
+
   @EpiTest(testDataFile = "sudoku_solve.tsv")
-  public static void solveSudokuWrapper(TimedExecutor executor,
-                                        List<List<Integer>> partialAssignment)
-      throws Exception {
+  public static void solveSudokuWrapper(
+      TimedExecutor executor, List<List<Integer>> partialAssignment) throws Exception {
     List<List<Integer>> solved = new ArrayList<>();
     for (List<Integer> row : partialAssignment) {
       solved.add(new ArrayList<>(row));
@@ -40,7 +42,7 @@ public class SudokuSolve {
           throw new TestFailure("Initial cell assignment has been changed");
     }
 
-    int blockSize = (int)Math.sqrt(solved.size());
+    int blockSize = (int) Math.sqrt(solved.size());
     for (int i = 0; i < solved.size(); i++) {
       assertUniqueSeq(solved.get(i));
       assertUniqueSeq(gatherColumn(solved, i));
@@ -72,8 +74,7 @@ public class SudokuSolve {
     return result;
   }
 
-  private static List<Integer> gatherSquareBlock(List<List<Integer>> data,
-                                                 int blockSize, int n) {
+  private static List<Integer> gatherSquareBlock(List<List<Integer>> data, int blockSize, int n) {
     List<Integer> result = new ArrayList<>();
     int blockX = n % blockSize;
     int blockY = n / blockSize;
@@ -88,9 +89,8 @@ public class SudokuSolve {
 
   public static void main(String[] args) {
     System.exit(
-        GenericTest
-            .runFromAnnotations(args, "SudokuSolve.java",
-                                new Object() {}.getClass().getEnclosingClass())
+        GenericTest.runFromAnnotations(
+                args, "SudokuSolve.java", new Object() {}.getClass().getEnclosingClass())
             .ordinal());
   }
 }

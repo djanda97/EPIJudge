@@ -1,4 +1,3 @@
-
 package epi.test_framework.serialization_traits;
 
 import epi.test_framework.minimal_json.JsonValue;
@@ -25,7 +24,7 @@ public class StringTrait extends SerializationTrait {
   @Override
   public List<Integer> getMetrics(Object x) {
     if (x instanceof String) {
-      return Collections.singletonList(((String)x).length());
+      return Collections.singletonList(((String) x).length());
     }
     throw new RuntimeException("Expected String");
   }

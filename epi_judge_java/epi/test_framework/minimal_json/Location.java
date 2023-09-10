@@ -1,23 +1,14 @@
-
 package epi.test_framework.minimal_json;
 
-/**
- * An immutable object that represents a location in the parsed text.
- */
+/** An immutable object that represents a location in the parsed text. */
 class Location {
-  /**
-   * The absolute character index, starting at 0.
-   */
+  /** The absolute character index, starting at 0. */
   public final int offset;
 
-  /**
-   * The line number, starting at 1.
-   */
+  /** The line number, starting at 1. */
   public final int line;
 
-  /**
-   * The column number, starting at 1.
-   */
+  /** The column number, starting at 1. */
   public final int column;
 
   Location(int offset, int line, int column) {
@@ -47,8 +38,7 @@ class Location {
     if (getClass() != obj.getClass()) {
       return false;
     }
-    Location other = (Location)obj;
-    return offset == other.offset && column == other.column &&
-        line == other.line;
+    Location other = (Location) obj;
+    return offset == other.offset && column == other.column && line == other.line;
   }
 }

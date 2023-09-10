@@ -1,8 +1,10 @@
 package epi;
+
 import epi.test_framework.EpiTest;
 import epi.test_framework.GenericTest;
 
 import java.util.List;
+
 public class HIndex {
   @EpiTest(testDataFile = "h_index.tsv")
   public static int hIndex(List<Integer> citations) {
@@ -12,9 +14,8 @@ public class HIndex {
 
   public static void main(String[] args) {
     System.exit(
-        GenericTest
-            .runFromAnnotations(args, "HIndex.java",
-                                new Object() {}.getClass().getEnclosingClass())
+        GenericTest.runFromAnnotations(
+                args, "HIndex.java", new Object() {}.getClass().getEnclosingClass())
             .ordinal());
   }
 }

@@ -1,4 +1,3 @@
-
 package epi;
 
 import java.util.ArrayList;
@@ -40,11 +39,9 @@ public class ListNode<T> {
       }
       if (visited.contains(node)) {
         if (node.next != node) {
-          result.append(node.data == null ? "null" : node.data.toString())
-              .append(" -> ... -> ");
+          result.append(node.data == null ? "null" : node.data.toString()).append(" -> ... -> ");
         }
-        result.append(node.data == null ? "null" : node.data.toString())
-            .append(" -> ...");
+        result.append(node.data == null ? "null" : node.data.toString()).append(" -> ...");
         break;
       } else {
         result.append(node.data == null ? "null" : node.data.toString());
@@ -64,7 +61,7 @@ public class ListNode<T> {
       return false;
     }
 
-    ListNode<?> that = (ListNode<?>)o;
+    ListNode<?> that = (ListNode<?>) o;
 
     return equalsIterativeImpl(this, that);
   }

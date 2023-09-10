@@ -1,4 +1,3 @@
-
 package epi.test_framework.minimal_json;
 
 import java.io.IOException;
@@ -88,7 +87,7 @@ class JsonNumber extends JsonValue {
     if (getClass() != object.getClass()) {
       return false;
     }
-    JsonNumber other = (JsonNumber)object;
+    JsonNumber other = (JsonNumber) object;
     return string.equals(other.string);
   }
 }

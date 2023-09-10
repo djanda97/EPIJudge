@@ -1,4 +1,5 @@
 package epi;
+
 import epi.test_framework.EpiTest;
 import epi.test_framework.GenericTest;
 import epi.test_framework.RandomSequenceChecker;
@@ -9,25 +10,26 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 public class NonuniformRandomNumber {
 
-  public static int
-  nonuniformRandomNumberGeneration(List<Integer> values,
-                                   List<Double> probabilities) {
+  public static int nonuniformRandomNumberGeneration(
+      List<Integer> values, List<Double> probabilities) {
     // TODO - you fill in here.
     return 0;
   }
+
   private static boolean nonuniformRandomNumberGenerationRunner(
-      TimedExecutor executor, List<Integer> values, List<Double> probabilities)
-      throws Exception {
+      TimedExecutor executor, List<Integer> values, List<Double> probabilities) throws Exception {
     final int N = 1000000;
     List<Integer> results = new ArrayList<>(N);
 
-    executor.run(() -> {
-      for (int i = 0; i < N; ++i) {
-        results.add(nonuniformRandomNumberGeneration(values, probabilities));
-      }
-    });
+    executor.run(
+        () -> {
+          for (int i = 0; i < N; ++i) {
+            results.add(nonuniformRandomNumberGeneration(values, probabilities));
+          }
+        });
 
     Map<Integer, Integer> counts = new HashMap<>();
     for (Integer result : results) {
@@ -49,19 +51,15 @@ public class NonuniformRandomNumber {
 
   @EpiTest(testDataFile = "nonuniform_random_number.tsv")
   public static void nonuniformRandomNumberGenerationWrapper(
-      TimedExecutor executor, List<Integer> values, List<Double> probabilities)
-      throws Exception {
+      TimedExecutor executor, List<Integer> values, List<Double> probabilities) throws Exception {
     RandomSequenceChecker.runFuncWithRetries(
-        ()
-            -> nonuniformRandomNumberGenerationRunner(executor, values,
-                                                      probabilities));
+        () -> nonuniformRandomNumberGenerationRunner(executor, values, probabilities));
   }
 
   public static void main(String[] args) {
     System.exit(
-        GenericTest
-            .runFromAnnotations(args, "NonuniformRandomNumber.java",
-                                new Object() {}.getClass().getEnclosingClass())
+        GenericTest.runFromAnnotations(
+                args, "NonuniformRandomNumber.java", new Object() {}.getClass().getEnclosingClass())
             .ordinal());
   }
 }

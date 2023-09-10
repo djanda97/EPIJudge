@@ -1,12 +1,13 @@
 package epi;
+
 import epi.test_framework.EpiTest;
 import epi.test_framework.EpiUserType;
 import epi.test_framework.GenericTest;
 
 import java.util.List;
+
 public class RoadNetwork {
   @EpiUserType(ctorParams = {int.class, int.class, int.class})
-
   public static class HighwaySection {
     public int x, y, distance;
 
@@ -25,7 +26,7 @@ public class RoadNetwork {
         return false;
       }
 
-      HighwaySection that = (HighwaySection)o;
+      HighwaySection that = (HighwaySection) o;
       return x == that.x && y == that.y && distance == that.distance;
     }
 
@@ -36,18 +37,16 @@ public class RoadNetwork {
   }
 
   @EpiTest(testDataFile = "road_network.tsv")
-
-  public static HighwaySection
-  findBestProposals(List<HighwaySection> H, List<HighwaySection> P, int n) {
+  public static HighwaySection findBestProposals(
+      List<HighwaySection> H, List<HighwaySection> P, int n) {
     // TODO - you fill in here.
     return new HighwaySection(0, 0, 0);
   }
 
   public static void main(String[] args) {
     System.exit(
-        GenericTest
-            .runFromAnnotations(args, "RoadNetwork.java",
-                                new Object() {}.getClass().getEnclosingClass())
+        GenericTest.runFromAnnotations(
+                args, "RoadNetwork.java", new Object() {}.getClass().getEnclosingClass())
             .ordinal());
   }
 }

@@ -1,4 +1,3 @@
-
 package epi.test_framework.serialization_traits;
 
 import epi.test_framework.TestUtils;
@@ -26,8 +25,8 @@ public class FloatTrait extends SerializationTrait {
   @Override
   public List<Integer> getMetrics(Object x) {
     if (x instanceof Float) {
-      float val = Math.abs((float)x);
-      return Collections.singletonList((int)Math.min(val, Integer.MAX_VALUE));
+      float val = Math.abs((float) x);
+      return Collections.singletonList((int) Math.min(val, Integer.MAX_VALUE));
     }
     throw new RuntimeException("Expected Float");
   }
@@ -35,7 +34,7 @@ public class FloatTrait extends SerializationTrait {
   @Override
   public boolean argumentsEqual(Object a, Object b) {
     if (a instanceof Float && b instanceof Float) {
-      return TestUtils.floatComparison((Float)a, (Float)b);
+      return TestUtils.floatComparison((Float) a, (Float) b);
     }
     throw new RuntimeException("Expected Float");
   }

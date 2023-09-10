@@ -1,4 +1,3 @@
-
 package epi.test_framework;
 
 public class TimeoutException extends Exception {
@@ -8,5 +7,7 @@ public class TimeoutException extends Exception {
     timer = new TestTimer(timeoutSeconds);
   }
 
-  TestTimer getTimer() { return timer; }
+  TestTimer getTimer() {
+    return timer;
+  }
 }

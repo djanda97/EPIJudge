@@ -1,4 +1,3 @@
-
 package epi.test_framework.minimal_json;
 
 import java.io.IOException;
@@ -6,8 +5,7 @@ import java.io.Writer;
 import java.util.Arrays;
 
 /**
- * Enables human readable JSON output by inserting whitespace between
- * values.after commas and
+ * Enables human readable JSON output by inserting whitespace between values.after commas and
  * colons. Example:
  *
  * <pre>
@@ -17,22 +15,23 @@ import java.util.Arrays;
 class PrettyPrint extends WriterConfig {
   private final char[] indentChars;
 
-  protected PrettyPrint(char[] indentChars) { this.indentChars = indentChars; }
+  protected PrettyPrint(char[] indentChars) {
+    this.indentChars = indentChars;
+  }
 
   /**
-   * Print every value on a separate line. Use tabs (<code>\t</code>) for
-   * indentation.
+   * Print every value on a separate line. Use tabs (<code>\t</code>) for indentation.
    *
    * @return A PrettyPrint instance for wrapped mode with tab indentation
    */
-  public static PrettyPrint singleLine() { return new PrettyPrint(null); }
+  public static PrettyPrint singleLine() {
+    return new PrettyPrint(null);
+  }
 
   /**
-   * Print every value on a separate line. Use the given number of spaces for
-   * indentation.
+   * Print every value on a separate line. Use the given number of spaces for indentation.
    *
-   * @param number
-   *          the number of spaces to use
+   * @param number the number of spaces to use
    * @return A PrettyPrint instance for wrapped mode with spaces indentation
    */
   public static PrettyPrint indentWithSpaces(int number) {

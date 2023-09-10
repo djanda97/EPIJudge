@@ -1,16 +1,17 @@
 package epi;
+
 import epi.test_framework.EpiTest;
 import epi.test_framework.GenericTest;
 
 import java.util.List;
+
 public class TreePostorder {
 
   private static class NodeAndState {
     public BinaryTreeNode<Integer> node;
     public Boolean subtreesTraversed;
 
-    public NodeAndState(BinaryTreeNode<Integer> node,
-                        Boolean subtreesTraversed) {
+    public NodeAndState(BinaryTreeNode<Integer> node, Boolean subtreesTraversed) {
       this.node = node;
       this.subtreesTraversed = subtreesTraversed;
     }
@@ -24,9 +25,8 @@ public class TreePostorder {
 
   public static void main(String[] args) {
     System.exit(
-        GenericTest
-            .runFromAnnotations(args, "TreePostorder.java",
-                                new Object() {}.getClass().getEnclosingClass())
+        GenericTest.runFromAnnotations(
+                args, "TreePostorder.java", new Object() {}.getClass().getEnclosingClass())
             .ordinal());
   }
 }
