@@ -16,8 +16,22 @@ public class DutchNationalFlag {
   }
 
   public static void dutchFlagPartition(int pivotIndex, List<Color> A) {
-    // TODO - you fill in here.
-    return;
+    List<Color> lessThan = new ArrayList<>();
+    List<Color> greaterThan = new ArrayList<>();
+    List<Color> equal = new ArrayList<>();
+    for (Color c : A) {
+      if (c.ordinal() < A.get(pivotIndex).ordinal()) {
+        lessThan.add(c);
+      } else if (c.ordinal() > A.get(pivotIndex).ordinal()) {
+        greaterThan.add(c);
+      } else {
+        equal.add(c);
+      }
+    }
+    A.clear();
+    A.addAll(lessThan);
+    A.addAll(equal);
+    A.addAll(greaterThan);
   }
 
   @EpiTest(testDataFile = "dutch_national_flag.tsv")
